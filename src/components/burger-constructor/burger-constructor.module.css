@@ -1,0 +1,27 @@
+.root {
+    display: flex; 
+    flex-direction: column;
+    height: 100%;
+    padding: 100px 0 0 16px;
+}
+
+.order {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    justify-content: flex-end;
+    margin-right: 16px;
+}
+
+.total {
+    margin-right: 9.5px;
+}
+
+.currency {
+    margin-right: 40px;
+}
+
+.currency svg {
+    width: 33px;
+    height: 33px;
+}
