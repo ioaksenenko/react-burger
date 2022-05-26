@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import AppHeader from '../app-header/app-header';
 import styles from './layout.module.css';
 
-const Lauout = () => {
+const Layout = () => {
   return (
     <>
       <header className={styles.header}><AppHeader /></header>
@@ -13,4 +13,4 @@ const Lauout = () => {
   );
 }
 
-export default Lauout;
+export default Layout;

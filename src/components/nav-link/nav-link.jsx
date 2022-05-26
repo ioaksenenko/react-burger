@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './nav-link.module.css';
 import { Link, useMatch } from "react-router-dom";
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 const NavLink = ({to, icon, text, ...props}) => {
     const match = useMatch(to);
@@ -12,5 +13,11 @@ const NavLink = ({to, icon, text, ...props}) => {
         </Link>
     );
 }
+
+NavLink.propTypes = {
+    to: PropTypes.string.isRequired,
+    icon: PropTypes.element.isRequired,
+    text: PropTypes.string.isRequired
+};
 
 export default NavLink;

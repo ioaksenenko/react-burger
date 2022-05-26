@@ -30,9 +30,9 @@ const IngredientTabs = ({cart, setСart}) => {
       </Tab>
     </div>
     <TabPanel>
-      <IngredientList id='buns' title="Булки" items={data.filter(item => item.type === 'bun')} cart={cart} setСart={setСart} />
-      <IngredientList id='sauces' title="Соусы" items={data.filter(item => item.type === 'sauce')} cart={cart} setСart={setСart} />
-      <IngredientList id='toppings' title="Начинки" items={data.filter(item => item.type === 'main')} cart={cart} setСart={setСart} />
+      <IngredientList id='buns' title="Булки" ingredients={data.filter(item => item.type === 'bun')} cart={cart} setСart={setСart} />
+      <IngredientList id='sauces' title="Соусы" ingredients={data.filter(item => item.type === 'sauce')} cart={cart} setСart={setСart} />
+      <IngredientList id='toppings' title="Начинки" ingredients={data.filter(item => item.type === 'main')} cart={cart} setСart={setСart} />
     </TabPanel>
     </>
   );
