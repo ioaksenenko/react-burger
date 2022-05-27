@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './constructor.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
-const Constructor = (props) => {
-    const [cart, setСart] = React.useState([]);
+const Constructor = () => {
+    const [cart, setСart] = useState([]);
 
     return (
         <div className={styles.row}>
@@ -16,6 +16,6 @@ const Constructor = (props) => {
             </div>
         </div>
     );
-}
+};
 
 export default Constructor;

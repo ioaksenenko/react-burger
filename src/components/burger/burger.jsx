@@ -10,7 +10,7 @@ const Burger = ({cart, setСart}) => {
     const ingredients = cart.filter(ingredient => ingredient.type !== 'bun');
 
     const removeIngredient = (e) => {
-        var target = e.target;
+        let target = e.target;
         while (target.dataset && !target.dataset.uuid) {
             target = target.parentNode;
         }
@@ -18,7 +18,7 @@ const Burger = ({cart, setСart}) => {
             const uuid = target.dataset.uuid;
             setСart([...cart.filter(e => e.uuid !== uuid)]);
         }
-    }
+    };
 
     return (
         <div className={styles.root}>
@@ -55,7 +55,7 @@ const Burger = ({cart, setСart}) => {
             )}
         </div>
     );
-}
+};
 
 Burger.propTypes = {
     cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,

@@ -5,7 +5,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
-const Ingredient = ({ingredient, cart, setСart, ...props}) => {
+const Ingredient = ({ingredient, cart, setСart}) => {
     const [count, setCount] = useState(0);
 
     const addIngredient = () => {
@@ -18,7 +18,7 @@ const Ingredient = ({ingredient, cart, setСart, ...props}) => {
             const ingredients = cart.filter(ingredient => ingredient.type !== 'bun');
             setСart([...ingredients, {...ingredient, uuid: uuid}]);
         }
-    }
+    };
 
     useEffect(() => {
         const ingredients = cart.filter(cartIngredient => cartIngredient._id === ingredient._id);
@@ -26,7 +26,7 @@ const Ingredient = ({ingredient, cart, setСart, ...props}) => {
     }, [cart, ingredient._id, ingredient.type]);
 
     return (
-        <div className={styles.root} {...props} onClick={addIngredient}>
+        <div className={styles.root} onClick={addIngredient}>
             <img className={styles.img} src={ingredient.image} alt={ingredient.name} />
             <div className={styles.priceBox}>
                 <p className={classNames("text text_type_digits-default", styles.price)}>{ingredient.price}</p>
@@ -36,7 +36,7 @@ const Ingredient = ({ingredient, cart, setСart, ...props}) => {
             {count ? <Counter count={count} size="default" /> : null}
         </div>
     );
-}
+};
 
 const ingredientPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,

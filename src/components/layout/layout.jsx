@@ -6,11 +6,11 @@ import styles from './layout.module.css';
 const Layout = () => {
   return (
     <>
-      <header className={styles.header}><AppHeader /></header>
-      <main className={styles.main}><Outlet /></main>
-      <footer className={styles.footer}></footer>
+    <header className={styles.header}><AppHeader /></header>
+    <main className={styles.main}><Outlet /></main>
+    <footer className={styles.footer}></footer>
     </>
   );
-}
+};
 
 export default Layout;

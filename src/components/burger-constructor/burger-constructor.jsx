@@ -13,17 +13,16 @@ const BurgerConstructor = ({cart, setСart}) => {
   return (
     <div className={styles.root}>
       <Burger cart={cart} setСart={setСart} />
-      {total ? (
+      {total > 0 && (
         <div className={styles.order}>
           <p className={classNames("text text_type_digits-medium", styles.total)}>{total}</p>
           <span className={styles.currency}><CurrencyIcon type="primary" /></span>
           <Button type="primary" size="large">Оформить заказ</Button>
         </div>
-      ) : null
-      }
+      )}
     </div>
   );
-}
+};
 
 BurgerConstructor.propTypes = {
   cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
