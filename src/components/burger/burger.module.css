@@ -1,0 +1,86 @@
+.root {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    height: 272px;
+    min-height: 272px;
+    gap: 16px;
+    overflow: hidden;
+}
+
+@media (min-height: 604px) {
+    .root {
+        height: 272px;
+    }
+}
+@media (min-height: 700px) {
+    .root {
+        height: 368px;
+    }
+}
+@media (min-height: 796px) {
+    .root {
+        height: 464px;
+    }
+}
+@media (min-height: 892px) {
+    .root {
+        height: 560px;
+    }
+}
+@media (min-height: 988px) {
+    .root {
+        height: 656px;
+    }
+}
+@media (min-height: 1084px) {
+    .root {
+        height: 752px;
+    }
+}
+@media (min-height: 1180px) {
+    .root {
+        height: 848px;
+    }
+}
+
+.draggable {
+    display: flex;
+    align-items: center;
+}
+
+.dragIcon {
+    margin: 0 4px;
+}
+
+.ingredient {
+    display: flex; 
+    align-items: center;
+    width: 536px;
+}
+
+.nonDragable {
+    margin-left: 32px;
+    margin-right: 16px;
+}
+
+.scrollable {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 80px;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}

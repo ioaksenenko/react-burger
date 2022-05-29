@@ -1,0 +1,33 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 272px;
+    height: 208px;
+    margin: 16px 12px;
+    position: relative;
+    cursor: pointer;
+}
+.root:nth-child(2n-1) {
+    margin-left: 0;
+}
+.root:nth-child(2n) {
+    margin-right: 0;
+}
+
+.img {
+}
+
+.priceBox {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+}
+
+.price {
+    margin-right: 8px;
+}
+
+.name {
+    text-align: center;
+}
