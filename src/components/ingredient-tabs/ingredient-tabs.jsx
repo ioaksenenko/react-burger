@@ -3,11 +3,10 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-tabs.module.css';
 import TabPanel from '../tab-panel/tab-panel';
 import IngredientList from '../ingredient-list/ingredient-list';
-import data from '../../utils/data';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../ingredient/ingredient';
 
-const IngredientTabs = ({cart, setСart}) => {
+const IngredientTabs = ({ingredients, cart, setСart}) => {
   const [activeTab, setActiveTab] = useState('buns');
 
   const scrollToActiveTab = (value) => {
@@ -30,15 +29,16 @@ const IngredientTabs = ({cart, setСart}) => {
       </Tab>
     </div>
     <TabPanel setActiveTab={setActiveTab}>
-      <IngredientList id='buns' title="Булки" ingredients={data.filter(item => item.type === 'bun')} cart={cart} setСart={setСart} />
-      <IngredientList id='sauces' title="Соусы" ingredients={data.filter(item => item.type === 'sauce')} cart={cart} setСart={setСart} />
-      <IngredientList id='toppings' title="Начинки" ingredients={data.filter(item => item.type === 'main')} cart={cart} setСart={setСart} />
+      <IngredientList id='buns' title="Булки" ingredients={ingredients.filter(item => item.type === 'bun')} cart={cart} setСart={setСart} />
+      <IngredientList id='sauces' title="Соусы" ingredients={ingredients.filter(item => item.type === 'sauce')} cart={cart} setСart={setСart} />
+      <IngredientList id='toppings' title="Начинки" ingredients={ingredients.filter(item => item.type === 'main')} cart={cart} setСart={setСart} />
     </TabPanel>
     </>
   );
 };
 
 IngredientTabs.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   setСart: PropTypes.func.isRequired
 };

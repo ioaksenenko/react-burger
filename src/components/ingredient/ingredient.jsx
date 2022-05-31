@@ -4,9 +4,12 @@ import classNames from 'classnames';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 
 const Ingredient = ({ingredient, cart, setСart}) => {
     const [count, setCount] = useState(0);
+    const [showModal, setShowModal] = useState(false);
 
     const addIngredient = () => {
         const bun = cart.find(ingredient => ingredient.type === 'bun');
@@ -20,13 +23,23 @@ const Ingredient = ({ingredient, cart, setСart}) => {
         }
     };
 
+    const handleIngredientClick = () => {
+        setShowModal(true);
+        addIngredient();
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
     useEffect(() => {
         const ingredients = cart.filter(cartIngredient => cartIngredient._id === ingredient._id);
         setCount(ingredients.length * (ingredient.type === 'bun' ? 2 : 1));
     }, [cart, ingredient._id, ingredient.type]);
 
     return (
-        <div className={styles.root} onClick={addIngredient}>
+        <>
+        <div className={styles.root} onClick={handleIngredientClick}>
             <img className={styles.img} src={ingredient.image} alt={ingredient.name} />
             <div className={styles.priceBox}>
                 <p className={classNames("text text_type_digits-default", styles.price)}>{ingredient.price}</p>
@@ -35,6 +48,10 @@ const Ingredient = ({ingredient, cart, setСart}) => {
             <p className={classNames("text text_type_main-default", styles.name)}>{ingredient.name}</p>
             {count ? <Counter count={count} size="default" /> : null}
         </div>
+        <Modal title='Детали ингредиента' show={showModal} handleClose={handleCloseModal}>
+            <IngredientDetails ingredient={ingredient} />
+        </Modal>
+        </>
     );
 };
 

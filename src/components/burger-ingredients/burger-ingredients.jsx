@@ -5,14 +5,15 @@ import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../ingredient/ingredient';
 
-const BurgerIngredients = ({cart, setСart}) => (
+const BurgerIngredients = ({ingredients, cart, setСart}) => (
   <>
   <p className={classNames("text text_type_main-large", styles.title)}>Соберите бургер</p>
-  <IngredientTabs cart={cart} setСart={setСart} />
+  <IngredientTabs ingredients={ingredients} cart={cart} setСart={setСart} />
   </>
 );
 
 BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
   setСart: PropTypes.func.isRequired
 };
