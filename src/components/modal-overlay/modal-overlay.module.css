@@ -7,7 +7,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #666666;
+    background-color: black;
+    opacity: .6;
+    z-index: 1;
 }
 
 .hide {

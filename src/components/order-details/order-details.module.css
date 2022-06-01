@@ -4,11 +4,11 @@
     align-items: center;
 }
 
-.orderNumber {
+.orderId {
     margin-top: 16px;
 }
 
-.orderId {
+.orderIdText {
     margin-top: 32px;
 }
 

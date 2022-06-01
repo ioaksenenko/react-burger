@@ -9,10 +9,6 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 const modalRoot = document.getElementById("modalRoot");
 
 const Modal = ({title, show, handleClose, children}) => {
-    const handleModalClick = (e) => {
-        e.stopPropagation();
-    }
-
     const escapeKeyPress = (e) => {
         if (e.key === "Escape") {
             handleClose();
@@ -27,15 +23,16 @@ const Modal = ({title, show, handleClose, children}) => {
     });
 
     return createPortal(
-        <ModalOverlay show={show} handleClose={handleClose}>
-            <div className={styles.modal} onClick={handleModalClick}>
-                <div className={styles.head}>
-                    <p className={classNames("text text_type_main-large", styles.title)}>{title}</p>
-                    <span className={styles.closeIcon} onClick={handleClose}><CloseIcon type="primary" /></span>
-                </div>
-                <div className={styles.body}>{children}</div>
+        <>
+        <div className={classNames(styles.modal, show ? styles.show : styles.hide)}>
+            <div className={styles.head}>
+                <p className={classNames("text text_type_main-large", styles.title)}>{title}</p>
+                <span className={styles.closeIcon} onClick={handleClose}><CloseIcon type="primary" /></span>
             </div>
-        </ModalOverlay>,
+            <div className={styles.body}>{children}</div>
+        </div>
+        <ModalOverlay show={show} handleClose={handleClose} />
+        </>,
         modalRoot
     );
 };

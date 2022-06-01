@@ -3,11 +3,9 @@ import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const ModalOverlay = ({show, handleClose, children}) => {
+const ModalOverlay = ({show, handleClose}) => {
     return (
-        <div className={classNames(styles.root, show ? styles.show : styles.hide)} onClick={handleClose}>
-            {children}
-        </div>
+        <div className={classNames(styles.root, show ? styles.show : styles.hide)} onClick={handleClose}></div>
     );
 };
 
@@ -17,11 +15,7 @@ ModalOverlay.defaultProps = {
 
 ModalOverlay.propTypes = {
     show: PropTypes.bool,
-    handleClose: PropTypes.func.isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node
-    ])
+    handleClose: PropTypes.func.isRequired
 };
 
 export default ModalOverlay;
