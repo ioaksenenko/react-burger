@@ -1,0 +1,15 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    height: 56px;
+}
+
+.name {
+    white-space: nowrap;
+}
+
+.value {
+    margin-top: 8px;
+}

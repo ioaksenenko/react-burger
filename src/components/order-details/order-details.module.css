@@ -1,0 +1,26 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orderId {
+    margin-top: 16px;
+}
+
+.orderIdText {
+    margin-top: 32px;
+}
+
+.doneImage {
+    margin-top: 60px;
+}
+
+.startСookText {
+    margin-top: 60px;
+}
+
+.waitText {
+    margin-top: 8px;
+    margin-bottom: 80px;
+}
