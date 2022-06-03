@@ -1,30 +1,30 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-tabs.module.css';
 import TabPanel from '../tab-panel/tab-panel';
 import IngredientList from '../ingredient-list/ingredient-list';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../ingredient/ingredient';
+import { DataContext } from '../../services/withFetchContext';
 
-const IngredientTabs = ({ingredients, cart, setСart}) => {
+const IngredientTabs = () => {
+  const { data } = useContext(DataContext)
   const [activeTab, setActiveTab] = useState('buns');
   const buns = useMemo(
-    () => ingredients.filter(
+    () => data.filter(
       ingredient => ingredient.type === 'bun'
     ), 
-    [ingredients]
+    [data]
   );
   const sauces = useMemo(
-    () => ingredients.filter(
+    () => data.filter(
       ingredient => ingredient.type === 'sauce'
     ), 
-    [ingredients]
+    [data]
   );
   const toppings = useMemo(
-    () => ingredients.filter(
+    () => data.filter(
       ingredient => ingredient.type === 'main'
     ), 
-    [ingredients]
+    [data]
   );
 
   const scrollToActiveTab = (value) => {
@@ -47,18 +47,12 @@ const IngredientTabs = ({ingredients, cart, setСart}) => {
       </Tab>
     </div>
     <TabPanel setActiveTab={setActiveTab}>
-      <IngredientList id='buns' title="Булки" ingredients={buns} cart={cart} setСart={setСart} />
-      <IngredientList id='sauces' title="Соусы" ingredients={sauces} cart={cart} setСart={setСart} />
-      <IngredientList id='toppings' title="Начинки" ingredients={toppings} cart={cart} setСart={setСart} />
+      <IngredientList id='buns' title="Булки" ingredients={buns} />
+      <IngredientList id='sauces' title="Соусы" ingredients={sauces} />
+      <IngredientList id='toppings' title="Начинки" ingredients={toppings} />
     </TabPanel>
     </>
   );
-};
-
-IngredientTabs.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-  cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-  setСart: PropTypes.func.isRequired
 };
 
 export default IngredientTabs;

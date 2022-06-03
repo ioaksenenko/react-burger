@@ -1,46 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import styles from './burger-constructor.module.css';
 import Burger from '../burger/burger';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../ingredient/ingredient';
-import Modal from '../modal/modal';
+import { CartContext } from '../../services/constructorContext';
+import withPost from '../hocs/with-post';
 import OrderDetails from '../order-details/order-details';
+import { ordersUrl } from '../../utils/data';
 
-const BurgerConstructor = ({cart, setСart}) => {
+const BurgerConstructor = () => {
+  const { cart } = useContext(CartContext);
   const bun = cart.find(ingredient => ingredient.type === 'bun');
   const total = cart.reduce((sum, ingredient) => sum + ingredient.price, bun ? bun.price : 0);
-  const [showModal, setShowModal] = useState(false);
-
-  const handleOrderClick = () => {
-    setShowModal(true);
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  }
+  const requestData = {ingredients: cart.map(ingredient => ingredient._id)};
+  const WithPostOrderDetails = withPost(ordersUrl, requestData, 'Оформить заказ')(OrderDetails);
   
   return (
     <div className={styles.root}>
-      <Burger cart={cart} setСart={setСart} />
+      <Burger />
       {total > 0 && (
         <div className={styles.order}>
           <p className={classNames("text text_type_digits-medium", styles.total)}>{total}</p>
           <span className={styles.currency}><CurrencyIcon type="primary" /></span>
-          <Button type="primary" size="large" onClick={handleOrderClick}>Оформить заказ</Button>
-          <Modal show={showModal} handleClose={handleCloseModal}>
-            <OrderDetails />
-          </Modal>
+          <WithPostOrderDetails />
         </div>
       )}
     </div>
   );
-};
-
-BurgerConstructor.propTypes = {
-  cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-  setСart: PropTypes.func.isRequired
 };
 
 export default BurgerConstructor;

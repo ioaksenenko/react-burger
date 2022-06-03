@@ -15,7 +15,7 @@ ModalOverlay.defaultProps = {
 
 ModalOverlay.propTypes = {
     show: PropTypes.bool,
-    handleClose: PropTypes.func.isRequired
+    handleClose: PropTypes.func
 };
 
 export default ModalOverlay;

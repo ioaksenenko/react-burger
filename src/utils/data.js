@@ -1,5 +1,2 @@
-const data = {
-   "order_id": "034536"
-}
-
- export default data;
+export const ingredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
+export const ordersUrl = 'https://norma.nomoreparties.space/api/orders';
