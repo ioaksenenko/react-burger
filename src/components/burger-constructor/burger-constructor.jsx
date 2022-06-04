@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import Burger from '../burger/burger';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,10 +10,35 @@ import { ordersUrl } from '../../utils/data';
 
 const BurgerConstructor = () => {
   const { cart } = useContext(CartContext);
-  const bun = cart.find(ingredient => ingredient.type === 'bun');
-  const total = cart.reduce((sum, ingredient) => sum + ingredient.price, bun ? bun.price : 0);
-  const requestData = {ingredients: cart.map(ingredient => ingredient._id)};
-  const WithPostOrderDetails = withPost(ordersUrl, requestData, 'Оформить заказ')(OrderDetails);
+
+  const bun = useMemo(
+    () => cart.find(
+      ingredient => ingredient.type === 'bun'
+    ), 
+    [cart]
+  );
+
+  const total = useMemo(
+    () => cart.reduce(
+      (sum, ingredient) => 
+        sum + ingredient.price, 
+      bun ? bun.price : 0
+    ), 
+    [cart, bun]
+  );
+
+  const ingredients = useMemo(
+    () => cart.map(
+      ingredient => ingredient._id
+    ), 
+    [cart]
+  );
+
+  const WithPostOrderDetails = withPost(
+    ordersUrl, 
+    { ingredients: ingredients }, 
+    'Оформить заказ'
+  )(OrderDetails);
   
   return (
     <div className={styles.root}>

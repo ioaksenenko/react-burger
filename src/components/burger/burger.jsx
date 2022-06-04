@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './burger.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
@@ -6,8 +6,20 @@ import { CartContext } from '../../services/constructorContext';
 
 const Burger = () => {
     const {cart, setСart} = useContext(CartContext);
-    const bun = cart.find(ingredient => ingredient.type === 'bun');
-    const ingredients = cart.filter(ingredient => ingredient.type !== 'bun');
+    
+    const bun = useMemo(
+        () => cart.find(
+            ingredient => ingredient.type === 'bun'
+        ),
+        [cart]
+    );
+
+    const ingredients = useMemo(
+        () => cart.filter(
+            ingredient => ingredient.type !== 'bun'
+        ),
+        [cart]
+    );
 
     const removeIngredient = (e) => {
         let target = e.target;

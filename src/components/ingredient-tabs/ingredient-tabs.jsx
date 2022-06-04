@@ -8,18 +8,21 @@ import { DataContext } from '../../services/withFetchContext';
 const IngredientTabs = () => {
   const { data } = useContext(DataContext)
   const [activeTab, setActiveTab] = useState('buns');
+
   const buns = useMemo(
     () => data.filter(
       ingredient => ingredient.type === 'bun'
     ), 
     [data]
   );
+
   const sauces = useMemo(
     () => data.filter(
       ingredient => ingredient.type === 'sauce'
     ), 
     [data]
   );
+  
   const toppings = useMemo(
     () => data.filter(
       ingredient => ingredient.type === 'main'
