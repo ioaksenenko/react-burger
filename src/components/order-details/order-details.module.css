@@ -8,8 +8,9 @@
     margin-top: 16px;
 }
 
-.orderIdText {
+.orderName {
     margin-top: 32px;
+    text-align: center;
 }
 
 .doneImage {

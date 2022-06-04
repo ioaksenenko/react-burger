@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styles from './ingredient.module.css';
 import classNames from 'classnames';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,10 +6,12 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import { CartContext } from '../../services/constructorContext';
 
-const Ingredient = ({ingredient, cart, setСart}) => {
+export const Ingredient = ({ingredient}) => {
     const [count, setCount] = useState(0);
     const [showModal, setShowModal] = useState(false);
+    const {cart, setСart} = useContext(CartContext);
 
     const addIngredient = () => {
         const bun = cart.find(ingredient => ingredient.type === 'bun');
@@ -55,7 +57,7 @@ const Ingredient = ({ingredient, cart, setСart}) => {
     );
 };
 
-const ingredientPropTypes = PropTypes.shape({
+export const ingredientPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -71,9 +73,5 @@ const ingredientPropTypes = PropTypes.shape({
 });
 
 Ingredient.propTypes = {
-    ingredient: ingredientPropTypes.isRequired,
-    cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-    setСart: PropTypes.func.isRequired
+    ingredient: ingredientPropTypes.isRequired
 };
-
-export {Ingredient, ingredientPropTypes};

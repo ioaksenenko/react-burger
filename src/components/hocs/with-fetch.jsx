@@ -1,37 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import FadeLoader from "react-spinners/FadeLoader";
+import React, { useEffect, useReducer } from 'react';
+import { DataContext } from '../../services/withFetchContext';
+import Loader from '../loader/loader';
+import { reducer, initialState } from '../../reducers/fetch-reducer';
+import ErrorMessage from '../error-message/error-message';
 
 const withFetch = url => WrappedComponent => props => {
-    const [ingredients, setIngredients] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [hasError, setHasError] = useState(false);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
+        dispatch({ type: "loading" });
         fetch(url)
             .then(res => res.json())
             .then(data => {
-                setLoading(false);
                 if (data.success) {
-                    setIngredients(data.data);
+                    dispatch({
+                        type: "success", 
+                        payload: data.data
+                    });
                 } else {
-                    setHasError(true);
+                    dispatch({
+                        type: "error", 
+                        payload: (data.hasOwnProperty("error") && data.error) || 'Неизвестная ошибка'
+                    });
                 }
             })
-            .catch(e => {
-                setLoading(false);
-                setHasError(true);
-                console.log(e.message);
+            .catch(error => {
+                dispatch({
+                    type: "error", 
+                    payload: error.message || 'Неизвестная ошибка'
+                });
             });
-        }, []);
+    }, []);
 
     return (
-        loading ? (
-            <FadeLoader color="#F2F2F3" loading={loading} />
-        ) : hasError ? (
-            <p className="text text_type_main-large mt-5 text-center">Во время загрузки данных произошла ошибка. Попробуйте обновить страницу позже.</p>
+        <>
+        <Loader loading={state.loading} />
+        {state.error ? (
+            <ErrorMessage>
+                <p className="text text_type_main-large mt-5">Во время загрузки данных произошла ошибка.</p>
+                <p className="text text_type_main-large mt-5">Попробуйте обновить страницу позже.</p>
+            </ErrorMessage>
         ) : (
-            <WrappedComponent ingredients={ingredients} {...props} />
-        )
+            <DataContext.Provider value={{ data: state.data }}>
+                {state.data && <WrappedComponent {...props} />}
+            </DataContext.Provider>
+        )}
+        </>
     )
 };
 

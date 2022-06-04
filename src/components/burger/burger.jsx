@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './burger.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../ingredient/ingredient';
+import { CartContext } from '../../services/constructorContext';
 
-const Burger = ({cart, setСart}) => {
-    const bun = cart.find(ingredient => ingredient.type === 'bun');
-    const ingredients = cart.filter(ingredient => ingredient.type !== 'bun');
+const Burger = () => {
+    const {cart, setСart} = useContext(CartContext);
+    
+    const bun = useMemo(
+        () => cart.find(
+            ingredient => ingredient.type === 'bun'
+        ),
+        [cart]
+    );
+
+    const ingredients = useMemo(
+        () => cart.filter(
+            ingredient => ingredient.type !== 'bun'
+        ),
+        [cart]
+    );
 
     const removeIngredient = (e) => {
         let target = e.target;
@@ -55,11 +67,6 @@ const Burger = ({cart, setСart}) => {
             )}
         </div>
     );
-};
-
-Burger.propTypes = {
-    cart: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-    setСart: PropTypes.func.isRequired
 };
 
 export default Burger;
