@@ -8,14 +8,13 @@
     position: relative;
     cursor: pointer;
 }
+
 .root:nth-child(2n-1) {
     margin-left: 0;
 }
+
 .root:nth-child(2n) {
     margin-right: 0;
-}
-
-.img {
 }
 
 .priceBox {
@@ -30,4 +29,8 @@
 
 .name {
     text-align: center;
+}
+
+.dragging {
+    box-shadow: inset 0px -2px 0px #4c4cff;
 }

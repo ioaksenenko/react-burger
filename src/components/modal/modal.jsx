@@ -1,19 +1,28 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { useSelector, useDispatch } from 'react-redux';
+import { closeModal, setModalContent } from '../../services/actions/modal';
 
 const modalRoot = document.getElementById("modalRoot");
 
-const Modal = ({title, show, handleClose, children}) => {
+const Modal = () => {
+    const { modalIsOpen, modalTitle, modalContent } = useSelector(store => store.modal);
+    const dispatch = useDispatch();
+
+    const handleClose = () => {
+        dispatch(setModalContent(null));
+        dispatch(closeModal());
+    };
+
     const escapeKeyPress = (e) => {
         if (e.key === "Escape") {
             handleClose();
         }
-    } 
+    };
 
     useEffect(() => {
         document.addEventListener("keydown", escapeKeyPress, false);
@@ -24,31 +33,17 @@ const Modal = ({title, show, handleClose, children}) => {
 
     return createPortal(
         <>
-        <div className={classNames(styles.modal, show ? styles.show : styles.hide)}>
+        <div className={classNames(styles.modal, modalIsOpen ? styles.show : styles.hide)}>
             <div className={styles.head}>
-                <p className={classNames("text text_type_main-large", styles.title)}>{title}</p>
+                <p className={classNames("text text_type_main-large", styles.title)}>{modalTitle}</p>
                 <span className={styles.closeIcon} onClick={handleClose}><CloseIcon type="primary" /></span>
             </div>
-            <div className={styles.body}>{children}</div>
+            <div className={styles.body}>{modalContent}</div>
         </div>
-        <ModalOverlay show={show} handleClose={handleClose} />
+        <ModalOverlay show={modalIsOpen} handleClose={handleClose} />
         </>,
         modalRoot
     );
-};
-
-Modal.defaultProps = {
-    show: false
-};
-
-Modal.propTypes = {
-    title: PropTypes.string,
-    show: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node
-    ])
 };
 
 export default Modal;

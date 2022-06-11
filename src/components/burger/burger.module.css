@@ -44,26 +44,6 @@
     }
 }
 
-.draggable {
-    display: flex;
-    align-items: center;
-}
-
-.dragIcon {
-    margin: 0 4px;
-}
-
-.ingredient {
-    display: flex; 
-    align-items: center;
-    width: 536px;
-}
-
-.nonDragable {
-    margin-left: 32px;
-    margin-right: 16px;
-}
-
 .scrollable {
     overflow: auto;
     display: flex;

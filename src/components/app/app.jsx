@@ -4,12 +4,12 @@ import Layout from '../layout/layout';
 import Constructor from '../constructor/constructor';
 import withFetch from '../hocs/with-fetch';
 import { ingredientsUrl } from '../../utils/data';
+import Modal from '../modal/modal';
 
 const WithFetchConstructor = withFetch(ingredientsUrl)(Constructor);
 
-function App() {
-  return (
-    <>
+const App = () => (
+  <>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<WithFetchConstructor />} />
@@ -17,8 +17,8 @@ function App() {
         <Route path="profile" element={<p className="text text_type_main-large">Личный кабинет</p>} />
       </Route>
     </Routes>
-    </>
-  );
-}
+    <Modal />
+  </>
+);
 
 export default App;

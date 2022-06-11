@@ -1,58 +1,51 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ingredient.module.css';
 import classNames from 'classnames';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from '../modal/modal';
-import { CartContext } from '../../services/constructorContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrag } from "react-dnd";
+import { openModal, setModalTitle, setModalContent } from '../../services/actions/modal';
 
-export const Ingredient = ({ingredient}) => {
+export const Ingredient = ({ ingredient }) => {
     const [count, setCount] = useState(0);
-    const [showModal, setShowModal] = useState(false);
-    const {cart, setСart} = useContext(CartContext);
+    const cart = useSelector(store => store.con.cart);
+    const dispatch = useDispatch();
 
-    const addIngredient = () => {
-        const bun = cart.find(ingredient => ingredient.type === 'bun');
-        const uuid = uuidv4();
-        if (ingredient.type !== 'bun' || !bun) {
-            setСart([...cart, {...ingredient, uuid: uuid}]);
-        }
-        if (ingredient.type === 'bun' && bun && ingredient._id !== bun._id) {
-            const ingredients = cart.filter(ingredient => ingredient.type !== 'bun');
-            setСart([...ingredients, {...ingredient, uuid: uuid}]);
-        }
-    };
+    const [{ isDrag }, dragRef] = useDrag({
+        type: ingredient.type === 'bun' ? 'bun' : 'filling',
+        item: ingredient,
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
 
     const handleIngredientClick = () => {
-        setShowModal(true);
-        addIngredient();
+        dispatch(setModalTitle('Детали ингредиента'));
+        dispatch(setModalContent(<IngredientDetails ingredient={ingredient} />));
+        dispatch(openModal());
     }
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    }
-
-    useEffect(() => {
-        const ingredients = cart.filter(cartIngredient => cartIngredient._id === ingredient._id);
-        setCount(ingredients.length * (ingredient.type === 'bun' ? 2 : 1));
-    }, [cart, ingredient._id, ingredient.type]);
+    useEffect(
+        () => {
+            const ingredients = cart.filter(cartIngredient => cartIngredient._id === ingredient._id);
+            setCount(ingredients.length * (ingredient.type === 'bun' ? 2 : 1));
+        },
+        [cart, ingredient._id, ingredient.type]
+    );
 
     return (
         <>
-        <div className={styles.root} onClick={handleIngredientClick}>
-            <img className={styles.img} src={ingredient.image} alt={ingredient.name} />
-            <div className={styles.priceBox}>
-                <p className={classNames("text text_type_digits-default", styles.price)}>{ingredient.price}</p>
-                <CurrencyIcon type="primary" />
+            <div ref={dragRef} className={classNames(styles.root, isDrag && styles.dragging)} onClick={handleIngredientClick}>
+                <img src={ingredient.image} alt={ingredient.name} />
+                <div className={styles.priceBox}>
+                    <p className={classNames("text text_type_digits-default", styles.price)}>{ingredient.price}</p>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <p className={classNames("text text_type_main-default", styles.name)}>{ingredient.name}</p>
+                {count !== 0 && <Counter count={count} size="default" />}
             </div>
-            <p className={classNames("text text_type_main-default", styles.name)}>{ingredient.name}</p>
-            {count ? <Counter count={count} size="default" /> : null}
-        </div>
-        <Modal title='Детали ингредиента' show={showModal} handleClose={handleCloseModal}>
-            <IngredientDetails ingredient={ingredient} />
-        </Modal>
         </>
     );
 };
