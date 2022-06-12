@@ -1,6 +1,6 @@
-export const SET_BUN_HOVER = 'SET_BUN_HOVER';
+export const SET_BUN_STATE = 'SET_BUN_STATE';
 
-export const setBunHover = bunHover => ({
-    type: SET_BUN_HOVER,
-    bunHover
+export const setBunState = state => ({
+    type: SET_BUN_STATE,
+    state
 });

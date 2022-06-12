@@ -1,9 +1,10 @@
-import { ADD_INGREDIENT, DEL_INGREDIENT } from '../actions/constructor';
+import { ADD_INGREDIENT, DEL_INGREDIENT, SET_INGREDIENT_IS_DRAG } from '../actions/constructor';
 import { v4 as uuidv4 } from 'uuid';
+import { addByIndexOrChangePosition } from '../../utils/constructor';
 
 const initialState = {
     cart: [],
-    dragType: 'default'
+    ingredientIsDrag: false
 };
 
 export const constructorReducer = (state = initialState, action) => {
@@ -11,17 +12,14 @@ export const constructorReducer = (state = initialState, action) => {
         case ADD_INGREDIENT: {
             const bun = state.cart.find(ingredient => ingredient.type === 'bun');
             const uuid = uuidv4();
+            const newIngredient = {...action.ingredient, uuid: uuid};
             return {
                 ...state,
-                cart: action.ingredient.type !== 'bun' || !bun
-                        ? state.cart.length 
-                        ? action.index !== -1 
-                        ? [...[...state.cart].splice(0, action.index).filter(ingredient => ingredient.uuid !== action.ingredient.uuid), {...action.ingredient, uuid: uuid}, ...[...state.cart].splice(action.index).filter(ingredient => ingredient.uuid !== action.ingredient.uuid)] 
-                        : [...state.cart, {...action.ingredient, uuid: uuid}]
-                        : [{...action.ingredient, uuid: uuid}]
-                        : action.ingredient._id !== bun._id
-                        ? state.cart.map(ingredient => ingredient.type !== 'bun' ? ingredient : {...action.ingredient, uuid: uuid})
-                        : [...state.cart]
+                cart: action.ingredient.type !== 'bun' || !bun ? addByIndexOrChangePosition(
+                    state.cart, newIngredient, action.index, 'uuid', action.ingredient.uuid
+                ) : action.ingredient._id !== bun._id ? state.cart.map(
+                    ingredient => ingredient.type !== 'bun' ? ingredient : newIngredient
+                ) : [...state.cart]
             };
         }
         case DEL_INGREDIENT: {
@@ -29,6 +27,12 @@ export const constructorReducer = (state = initialState, action) => {
                 ...state,
                 cart: state.cart.filter(ingredient => ingredient.uuid !== action.uuid)
             };
+        }
+        case SET_INGREDIENT_IS_DRAG: {
+            return {
+                ...state,
+                ingredientIsDrag: action.isDrag
+            }
         }
         default: {
             return state;

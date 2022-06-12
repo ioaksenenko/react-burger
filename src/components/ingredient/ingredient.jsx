@@ -7,6 +7,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
 import { openModal, setModalTitle, setModalContent } from '../../services/actions/modal';
+import { setIngredientIsDrag } from '../../services/actions/constructor';
 
 export const Ingredient = ({ ingredient }) => {
     const [count, setCount] = useState(0);
@@ -16,9 +17,13 @@ export const Ingredient = ({ ingredient }) => {
     const [{ isDrag }, dragRef] = useDrag({
         type: ingredient.type === 'bun' ? 'bun' : 'filling',
         item: ingredient,
-        collect: monitor => ({
-            isDrag: monitor.isDragging()
-        })
+        collect: monitor => {
+            const isDrag = monitor.isDragging();
+            dispatch(setIngredientIsDrag(isDrag));
+            return {
+                isDrag: isDrag
+            }
+        }
     });
 
     const handleIngredientClick = () => {

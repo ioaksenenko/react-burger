@@ -11,13 +11,14 @@ const TargetFilling = ({ ingredient }) => {
     const dispatch = useDispatch();
     const cart = useSelector(store => store.con.cart);
 
-    const [{ isOver, item }, targetRef] = useDrop({
+    const [{ canDrop, isOver, item }, targetRef] = useDrop({
         accept: "filling",
         drop(item) {
             const index = cart.indexOf(ingredient);
             dispatch(addIngredient(item, index));
         },
         collect: monitor => ({
+            canDrop: monitor.canDrop(),
             isOver: monitor.isOver(),
             item: monitor.getItem()
         })
@@ -34,7 +35,12 @@ const TargetFilling = ({ ingredient }) => {
     };
 
     return (ingredient || (item && item.type !== 'bun')) && (
-        <div ref={targetRef} data-uuid={ingredient && ingredient.uuid} className={classNames(styles.ingredient, !ingredient && styles.nonDragable, isOver && styles.hover)}>
+        <div ref={targetRef} data-uuid={ingredient && ingredient.uuid} className={classNames(
+            styles.ingredient, 
+            !ingredient && styles.nonDragable, 
+            canDrop && !isOver && styles.hilight,
+            isOver && styles.hover
+        )}>
             {ingredient && <ConstructorElement
                 text={ingredient.name}
                 price={ingredient.price}

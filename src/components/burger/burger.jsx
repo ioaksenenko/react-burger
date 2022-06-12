@@ -7,7 +7,7 @@ import TargetBun from '../target-bun/target-bun';
 import DragFilling from '../drag-filling/drag-filling';
 
 const Burger = () => {
-    const { cart } = useSelector(store => store.con);
+    const { cart, ingredientIsDrag } = useSelector(store => store.con);
 
     const filling = useMemo(
         () => cart.filter(
@@ -17,14 +17,20 @@ const Burger = () => {
     );
 
     return (
-        <div className={classNames(styles.root)}>
-            <TargetBun type="top" />
-            {filling.length ? (
-                <div className={styles.scrollable}>
-                    {filling.map(ingredient => <DragFilling key={ingredient.uuid} ingredient={ingredient} />)}
-                </div>
-            ) : <TargetFilling />}
-            <TargetBun type="bottom" />
+        <div className={classNames(styles.root, !cart.length && !ingredientIsDrag && styles.bordered)}>
+            {!cart.length && !ingredientIsDrag ? (
+                <p className={classNames('text text_type_main-default text_color_inactive', styles.stubText)}>Перетащите сюда ингредиенты</p>
+            ) : (
+                <>
+                <TargetBun type="top" />
+                {filling.length ? (
+                    <div className={styles.scrollable}>
+                        {filling.map(ingredient => <DragFilling key={ingredient.uuid} ingredient={ingredient} />)}
+                    </div>
+                ) : <TargetFilling />}
+                <TargetBun type="bottom" />
+                </>
+            )}
         </div>
     );
 };

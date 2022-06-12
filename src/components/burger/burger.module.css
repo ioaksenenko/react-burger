@@ -8,6 +8,10 @@
     overflow: hidden;
 }
 
+.bordered {
+    border: thin solid #2f2f37;
+}
+
 @media (min-height: 604px) {
     .root {
         height: 272px;
@@ -63,4 +67,8 @@
 .scrollable::-webkit-scrollbar-thumb {
     background: #8585AD;
     border: 3px solid #8585AD;
+}
+
+.stubText {
+    text-align: center;
 }

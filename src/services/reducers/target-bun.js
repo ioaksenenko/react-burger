@@ -1,14 +1,12 @@
-import { SET_BUN_HOVER } from "../actions/target-bun";
+import { SET_BUN_STATE } from "../actions/target-bun";
 
-const initialState = {
-    bunHover: false
-};
+const initialState = {};
 
 export const targetBunReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_BUN_HOVER: {
+        case SET_BUN_STATE: {
             return {
-                bunHover: action.bunHover
+                ...action.state
             };
         }
         default: {
