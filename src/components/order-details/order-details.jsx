@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './order-details.module.css';
 import classNames from 'classnames';
 import doneImage from '../../images/done.svg'
-import { DataContext } from '../../services/withPostContext';
+import { useSelector } from 'react-redux';
+import { ordersUrl } from '../../utils/data';
 
 const OrderDetails = () => {
-    const {data} = useContext(DataContext);
+    const data = useSelector(store => store.fetch[ordersUrl].data);
 
-    return (
+    return data && (
         <div className={styles.root}>
             <p className={classNames("text text_type_digits-large", styles.orderId)}>{data.order.number}</p>
             <p className={classNames("text text_type_main-medium", styles.orderName)}>{data.name}</p>

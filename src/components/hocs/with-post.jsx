@@ -1,71 +1,57 @@
-import React, { useState, useReducer } from 'react';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
+import React, { useState, useEffect } from 'react';
 import Loader from '../loader/loader';
-import { DataContext } from '../../services/withPostContext';
-import { reducer, initialState } from '../../reducers/fetch-reducer';
 import ErrorMessage from '../error-message/error-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { request } from '../../services/actions/fetch';
+import { openModal, setModalTitle, setModalContent } from '../../services/actions/modal';
 
-const withPost = (url, data, text) => WrappedComponent => props => {
-    const [showModal, setShowModal] = useState(false);
-    const [state, dispatch] = useReducer(reducer, initialState);
+const withPost = (url, data) => WrappedComponent => props => {
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const response = useSelector(store => store.fetch[url]);
+    const dispatch = useDispatch();
 
-    const submit = () => {
-        dispatch({ type: "loading" });
-        fetch(url, {
+    useEffect(
+        () => {
+            if (response) {
+                setError(response.error);
+                setLoading(response.loading);
+            }
+        },
+        [response]
+    );
+
+    const handleSubmit = () => {
+        const options = {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(
-            response => response.json()
-        ).then(
-            data => {
-                setShowModal(true);
-                if (data.success) {
-                    dispatch({
-                        type: "success", 
-                        payload: data
-                    });
-                } else {
-                    dispatch({
-                        type: "error", 
-                        payload: (data.hasOwnProperty("error") && data.error) || 'Неизвестная ошибка'
-                    });
-                }
-            }
-        ).catch(
-            error => {
-                setShowModal(true);
-                dispatch({
-                    type: "error", 
-                    payload: error.message || 'Неизвестная ошибка'
-                });
-            }
-        )
+        };
+        dispatch(request(url, options));
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    }
+    useEffect(
+        () => {
+            if (error) {
+                dispatch(setModalTitle('Ошибка'));
+                dispatch(setModalContent(
+                    <ErrorMessage>
+                        <p className="text text_type_main-medium mt-5">Во время отправки данных произошла ошибка.</p>
+                        <p className="text text_type_main-medium mt-5">Попробуйте повторить запрос позже.</p>
+                    </ErrorMessage>
+                ));
+                dispatch(openModal());
+            }
+        },
+        [dispatch, error]
+    );
 
     return (
         <>
-        <Button type="primary" size="large" onClick={submit}>{text}</Button>
-        <Loader loading={state.loading} />
-        <Modal show={showModal} handleClose={handleCloseModal}>
-            {state.error ? (
-                <ErrorMessage>
-                    <p className="text text_type_main-medium mt-5">Во время отправки данных произошла ошибка.</p>
-                    <p className="text text_type_main-medium mt-5">Попробуйте повторить запрос позже.</p>
-                </ErrorMessage>
-            ) : (
-                <DataContext.Provider value={{ data: state.data }}>
-                    {state.data && <WrappedComponent {...props} />}
-                </DataContext.Provider>
-            )}
-        </Modal>
+            <Loader loading={loading} />
+            <WrappedComponent handleSubmit={handleSubmit} {...props} />
         </>
     )
 };

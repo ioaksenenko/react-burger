@@ -1,15 +1,15 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import Burger from '../burger/burger';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
-import { CartContext } from '../../services/constructorContext';
 import withPost from '../hocs/with-post';
-import OrderDetails from '../order-details/order-details';
 import { ordersUrl } from '../../utils/data';
+import { useSelector } from 'react-redux';
+import ModalButton from '../modal-button/modal-button';
 
 const BurgerConstructor = () => {
-  const { cart } = useContext(CartContext);
+  const cart = useSelector(store => store.con.cart);
 
   const bun = useMemo(
     () => cart.find(
@@ -34,11 +34,10 @@ const BurgerConstructor = () => {
     [cart]
   );
 
-  const WithPostOrderDetails = withPost(
+  const WithPostModalButton= withPost(
     ordersUrl, 
-    { ingredients: ingredients }, 
-    'Оформить заказ'
-  )(OrderDetails);
+    { ingredients }
+  )(ModalButton);
   
   return (
     <div className={styles.root}>
@@ -47,7 +46,7 @@ const BurgerConstructor = () => {
         <div className={styles.order}>
           <p className={classNames("text text_type_digits-medium", styles.total)}>{total}</p>
           <span className={styles.currency}><CurrencyIcon type="primary" /></span>
-          <WithPostOrderDetails />
+          <WithPostModalButton>Оформить заказ</WithPostModalButton>
         </div>
       )}
     </div>

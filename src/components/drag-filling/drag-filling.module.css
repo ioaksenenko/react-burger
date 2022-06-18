@@ -1,0 +1,8 @@
+.draggable {
+    display: flex;
+    align-items: center;
+}
+
+.dragIcon {
+    margin: 0 4px;
+}

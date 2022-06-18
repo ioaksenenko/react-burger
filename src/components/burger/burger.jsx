@@ -1,69 +1,35 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
-import { CartContext } from '../../services/constructorContext';
+import { useSelector } from 'react-redux';
+import TargetFilling from '../target-filling/target-filling';
+import TargetBun from '../target-bun/target-bun';
+import DragFilling from '../drag-filling/drag-filling';
 
 const Burger = () => {
-    const {cart, setСart} = useContext(CartContext);
-    
-    const bun = useMemo(
-        () => cart.find(
-            ingredient => ingredient.type === 'bun'
-        ),
-        [cart]
-    );
+    const { cart, ingredientIsDrag } = useSelector(store => store.con);
 
-    const ingredients = useMemo(
+    const filling = useMemo(
         () => cart.filter(
             ingredient => ingredient.type !== 'bun'
         ),
         [cart]
     );
 
-    const removeIngredient = (e) => {
-        let target = e.target;
-        while (target.dataset && !target.dataset.uuid) {
-            target = target.parentNode;
-        }
-        if (target.dataset) {
-            const uuid = target.dataset.uuid;
-            setСart([...cart.filter(e => e.uuid !== uuid)]);
-        }
-    };
-
     return (
-        <div className={styles.root}>
-            {bun && (
-                <div className={classNames(styles.ingredient, styles.nonDragable)}>
-                    <ConstructorElement type="top" isLocked text={bun.name} price={bun.price} thumbnail={bun.image} />
-                </div>
-            )}
-            {ingredients.length > 0 && (
-                <div className={styles.scrollable}>
-                {ingredients.map(ingredient => {
-                    return (
-                        <div key={ingredient.uuid} className={styles.draggable}>
-                            <div className={styles.dragIcon}>
-                                <DragIcon type="primary" />
-                            </div>
-                            <div data-uuid={ingredient.uuid} className={styles.ingredient}>
-                                <ConstructorElement 
-                                    text={ingredient.name} 
-                                    price={ingredient.price} 
-                                    thumbnail={ingredient.image} 
-                                    handleClose={removeIngredient}
-                                />
-                            </div>
-                        </div>
-                    )
-                })}
-                </div>
-            )}
-            {bun && (
-                <div className={classNames(styles.ingredient, styles.nonDragable)}>
-                    <ConstructorElement type="bottom" isLocked text={bun.name} price={bun.price} thumbnail={bun.image} />
-                </div>
+        <div className={classNames(styles.root, !cart.length && !ingredientIsDrag && styles.bordered)}>
+            {!cart.length && !ingredientIsDrag ? (
+                <p className={classNames('text text_type_main-default text_color_inactive', styles.stubText)}>Перетащите сюда ингредиенты</p>
+            ) : (
+                <>
+                <TargetBun type="top" />
+                {filling.length ? (
+                    <div className={styles.scrollable}>
+                        {filling.map(ingredient => <DragFilling key={ingredient.uuid} ingredient={ingredient} />)}
+                    </div>
+                ) : <TargetFilling />}
+                <TargetBun type="bottom" />
+                </>
             )}
         </div>
     );
