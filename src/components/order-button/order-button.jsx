@@ -5,9 +5,10 @@ import OrderDetails from "../order-details/order-details";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ORDERS_URL } from "../../utils/urls";
 import { useHistory, useLocation } from "react-router-dom";
-import { openModal, setModalTitle, setModalContent } from '../../services/actions/modal';
+import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from '../../services/actions/modal';
 import { sendRequest } from "../../services/actions/axios";
 import { useAuth } from "../../hooks";
+import { clearCart } from "../../services/actions/constructor";
 
 const OrderButton = () => {
     const cart = useSelector(store => store.con.cart);
@@ -45,10 +46,15 @@ const OrderButton = () => {
         [cart]
     );
 
+    const onCloseModal = () => {
+        dispatch(clearCart());
+    }
+
     const onRequestSuccess = () => {
         dispatch(setModalTitle(null));
         dispatch(setModalContent(<OrderDetails />));
         dispatch(openModal());
+        dispatch(setModalCloseCallback(onCloseModal));
     }
 
     const WithAxiosButton= withAxios({

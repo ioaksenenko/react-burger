@@ -1,4 +1,4 @@
-import { SEND_REQUEST, SET_DATA, SET_ERROR } from "../actions/axios";
+import { SEND_REQUEST, SET_DATA, SET_ERROR, CLEAR_RESPONSE } from "../actions/axios";
 
 const initialState = {};
 
@@ -31,6 +31,16 @@ export const axiosReducer = (state = initialState, action) => {
                     loading: false,
                     data: null,
                     error: action.error
+                }
+            };
+        }
+        case CLEAR_RESPONSE: {
+            return {
+                ...state,
+                [action.url]: {
+                    loading: false,
+                    data: null,
+                    error: null
                 }
             };
         }

@@ -32,6 +32,7 @@ axiosInstance.interceptors.response.use(
             if (response.success) {
                 setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
                 config.headers['Authorization'] = response.accessToken;
+                config.withCredentials = true;
                 return axiosInstance(config);
             }
             return Promise.reject(error);

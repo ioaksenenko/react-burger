@@ -1,6 +1,6 @@
 import { 
     ADD_INGREDIENT, DEL_INGREDIENT, SET_INGREDIENT,
-    SET_INGREDIENT_IS_DRAG,  
+    SET_INGREDIENT_IS_DRAG, CLEAR_CART
 } from '../actions/constructor';
 import { v4 as uuidv4 } from 'uuid';
 import { addByIndexOrChangePosition } from '../../utils/constructor';
@@ -42,6 +42,12 @@ export const constructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredientIsDrag: action.isDrag
+            }
+        }
+        case CLEAR_CART: {
+            return {
+                ...state,
+                cart: []
             }
         }
         default: {

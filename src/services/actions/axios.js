@@ -3,6 +3,7 @@ import { axiosInstance } from "../../utils/axios";
 export const SEND_REQUEST = 'SEND_REQUEST';
 export const SET_DATA = 'SET_DATA';
 export const SET_ERROR = 'SET_ERROR';
+export const CLEAR_RESPONSE = 'CLEAR_RESPONSE';
 
 export const sendRequest = (url) => ({
     type: SEND_REQUEST,
@@ -35,3 +36,8 @@ export const request = (config, successCallback, errorCallback) => dispatch => {
         errorCallback && errorCallback(error?.response?.data?.message || error);
     });
 }
+
+export const clearResponse = (url) => ({
+    type: CLEAR_RESPONSE,
+    url
+});

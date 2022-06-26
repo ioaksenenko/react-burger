@@ -5,6 +5,7 @@ import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer
 import NavLink from '../nav-link/nav-link';
 import { useSelector } from 'react-redux';
 import { USER_URL } from '../../utils/urls';
+import { Link } from 'react-router-dom';
 
 const AppHeader = () => {
     const user = useSelector(store => store.axios[USER_URL]?.data?.user);
@@ -13,7 +14,7 @@ const AppHeader = () => {
         <nav className={styles.nav}>
             <NavLink exact to="/" icon={<BurgerIcon />} text="Конструктор" />
             <NavLink to="/order-feed" icon={<ListIcon />} text="Лента заказов" />
-            <div className={styles.logo}><Logo /></div>
+            <Link to="/" className={styles.logo}><Logo /></Link>
             <NavLink to="/profile" icon={<ProfileIcon />} text={user ? user.name : "Личный кабинет"} />
         </nav>
     );

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { request } from "../services/actions/axios";
+import { request, clearResponse } from "../services/actions/axios";
 import { USER_URL, LOGIN_URL, LOGOUT_URL } from "../utils/urls";
 import { setCookie, deleteCookie } from "../utils/cookie";
 import { setModalTitle, setModalContent, openModal } from "../services/actions/modal";
@@ -74,6 +74,7 @@ const useAuth = () => {
         if (data?.success) {
             deleteCookie('accessToken');
             window.localStorage.removeItem('refreshToken');
+            dispatch(clearResponse(USER_URL));
         }
     }
 
