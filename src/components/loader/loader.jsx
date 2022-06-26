@@ -7,16 +7,16 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 const Loader = ({loading}) => (
     loading && (
         <>
-        <div className={styles.root}>
-            <FadeLoader color="#F2F2F3" loading={loading} />
-        </div>
-        <ModalOverlay show />
+            <div className={styles.root}>
+                <FadeLoader color="#F2F2F3" loading={loading} />
+            </div>
+            <ModalOverlay show />
         </>
     )
 );
 
 Loader.propTypes = {
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool
 }
 
 export default Loader;

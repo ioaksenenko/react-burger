@@ -6,30 +6,49 @@ import PropTypes from 'prop-types';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag } from "react-dnd";
-import { openModal, setModalTitle, setModalContent } from '../../services/actions/modal';
+import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from '../../services/actions/modal';
 import { setIngredientIsDrag } from '../../services/actions/constructor';
+import { setIngredient } from '../../services/actions/constructor';
+import { useHistory } from 'react-router-dom';
 
 export const Ingredient = ({ ingredient }) => {
     const [count, setCount] = useState(0);
     const cart = useSelector(store => store.con.cart);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [{ isDrag }, dragRef] = useDrag({
         type: ingredient.type === 'bun' ? 'bun' : 'filling',
         item: ingredient,
-        collect: monitor => {
-            const isDrag = monitor.isDragging();
-            dispatch(setIngredientIsDrag(isDrag));
-            return {
-                isDrag: isDrag
-            }
-        }
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
     });
 
+    useEffect(
+        () => {
+            dispatch(setIngredientIsDrag(isDrag));
+        },
+        [dispatch, isDrag]
+    );
+
+    const onCloseModal = () => {
+        history.replace({
+            pathname: '/',
+            state: null
+        });
+    }
+
     const handleIngredientClick = () => {
+        dispatch(setIngredient(ingredient));
         dispatch(setModalTitle('Детали ингредиента'));
-        dispatch(setModalContent(<IngredientDetails ingredient={ingredient} />));
+        dispatch(setModalContent(<IngredientDetails />));
+        dispatch(setModalCloseCallback(onCloseModal));
         dispatch(openModal());
+        history.replace({
+            pathname: `/ingredients/${ingredient._id}`,
+            state: { modal: true }
+        });
     }
 
     useEffect(

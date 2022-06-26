@@ -1,9 +1,14 @@
-import { OPEN_MODAL, CLOSE_MODAL, SET_MODAL_TITLE, SET_MODAL_CONTENT } from "../actions/modal";
+import { 
+    OPEN_MODAL, CLOSE_MODAL, 
+    SET_MODAL_TITLE, SET_MODAL_CONTENT, 
+    SET_MODAL_CLOSE_CALLBACK 
+} from "../actions/modal";
 
 const initialState = {
     modalIsOpen: false,
     modalTitle: null,
-    modalContent: null
+    modalContent: null,
+    modalOnClose: null
 };
 
 export const modalReducer = (state = initialState, action) => {
@@ -30,6 +35,12 @@ export const modalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 modalContent: action.modalContent
+            };
+        }
+        case SET_MODAL_CLOSE_CALLBACK: {
+            return {
+                ...state,
+                modalOnClose: action.callback
             };
         }
         default: {

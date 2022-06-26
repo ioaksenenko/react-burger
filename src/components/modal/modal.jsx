@@ -5,17 +5,23 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useSelector, useDispatch } from 'react-redux';
-import { closeModal, setModalContent } from '../../services/actions/modal';
+import { closeModal, setModalContent, setModalTitle, setModalCloseCallback } from '../../services/actions/modal';
 
 const modalRoot = document.getElementById("modalRoot");
 
 const Modal = () => {
-    const { modalIsOpen, modalTitle, modalContent } = useSelector(store => store.modal);
+    const { 
+        modalIsOpen, modalTitle, 
+        modalContent, modalOnClose 
+    } = useSelector(store => store.modal);
     const dispatch = useDispatch();
 
     const handleClose = () => {
-        dispatch(setModalContent(null));
         dispatch(closeModal());
+        modalOnClose && modalOnClose();
+        dispatch(setModalTitle(null));
+        dispatch(setModalContent(null));
+        dispatch(setModalCloseCallback(null));
     };
 
     const escapeKeyPress = (e) => {

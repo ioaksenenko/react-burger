@@ -4,10 +4,10 @@ import styles from './ingredient-tabs.module.css';
 import TabPanel from '../tab-panel/tab-panel';
 import IngredientList from '../ingredient-list/ingredient-list';
 import { useSelector } from 'react-redux';
-import { ingredientsUrl } from '../../utils/data';
+import { INGREDIENTS_URL } from '../../utils/urls';
 
 const IngredientTabs = () => {
-  const ingredients = useSelector(store => store.fetch[ingredientsUrl].data);
+  const ingredients = useSelector(store => store.axios[INGREDIENTS_URL]?.data?.data || []);
   const [activeTab, setActiveTab] = useState('buns');
 
   const buns = useMemo(

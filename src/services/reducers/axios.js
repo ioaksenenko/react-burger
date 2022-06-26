@@ -1,36 +1,36 @@
-import { FETCH_REQUEST, FETCH_SUCCESS, FETCH_FAILED } from '../actions/fetch';
+import { SEND_REQUEST, SET_DATA, SET_ERROR } from "../actions/axios";
 
 const initialState = {};
 
-export const fetchReducer = (state = initialState, action) => {
+export const axiosReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_REQUEST: {
+        case SEND_REQUEST: {
             return {
                 ...state,
                 [action.url]: {
+                    loading: true,
                     data: null,
-                    error: null,
-                    loading: true
+                    error: null
                 }
             };
         }
-        case FETCH_SUCCESS: {
+        case SET_DATA: {
             return {
                 ...state,
                 [action.url]: {
+                    loading: false,
                     data: action.data,
-                    error: null,
-                    loading: false
-                }  
+                    error: null
+                }
             };
         }
-        case FETCH_FAILED: {
+        case SET_ERROR: {
             return {
                 ...state,
                 [action.url]: {
+                    loading: false,
                     data: null,
-                    error: action.error,
-                    loading: false
+                    error: action.error
                 }
             };
         }
