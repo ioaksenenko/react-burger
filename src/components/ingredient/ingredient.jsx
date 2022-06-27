@@ -16,6 +16,7 @@ export const Ingredient = ({ ingredient }) => {
     const cart = useSelector(store => store.con.cart);
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation();
 
     const [{ isDrag }, dragRef] = useDrag({
         type: ingredient.type === 'bun' ? 'bun' : 'filling',
@@ -47,7 +48,7 @@ export const Ingredient = ({ ingredient }) => {
         dispatch(openModal());
         history.replace({
             pathname: `/ingredients/${ingredient._id}`,
-            state: { modal: true }
+            state: { background: location }
         });
     }
 

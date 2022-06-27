@@ -12,8 +12,10 @@ import ProtectedRoute from '../protected-route/protected-route';
 const App = () => {
   const location = useLocation();
 
+  const background = location.state?.background
+
   return (
-    <Layout>
+    <Layout location={background || location}>
       <Switch>
         <Route exact path="/">
           <ConstructorPage />
@@ -37,7 +39,7 @@ const App = () => {
           <ResetPasswordPage />
         </ProtectedRoute>
         <Route exact path="/ingredients/:id">
-          {location.state?.modal ? <ConstructorPage /> : <IngredientPage />}
+          {background ? <ConstructorPage /> : <IngredientPage />}
         </Route>
         <Route>
           <NotFoundPage />

@@ -30,7 +30,7 @@ const ConstructorPage = () => {
     );
 
     const onSuccess = (data) => {
-        if (location.state?.modal) {
+        if (location.state?.background) {
             const ingredient = data?.data.find(ingredient => ingredient._id === id);
             dispatch(setIngredient(ingredient));
             dispatch(setModalTitle('Детали ингредиента'));
@@ -39,7 +39,7 @@ const ConstructorPage = () => {
             dispatch(openModal());
             history.replace({
                 pathname: `/ingredients/${ingredient._id}`,
-                state: { modal: true }
+                state: { background: location }
             });
         }
     }
