@@ -1,0 +1,40 @@
+.root {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    padding-top: 120px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    margin-right: 60px;
+    width: 320px;
+}
+
+.link {
+    padding: 16px 0;
+}
+
+.active {
+    color: #F2F2F3;
+}
+
+.routes {
+    width: 480px;
+}
+
+.hint {
+    margin-top: 80px;
+    opacity: 0.4;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.fields div:first-child {
+    min-width: 480px;
+}

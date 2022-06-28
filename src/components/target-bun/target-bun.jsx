@@ -44,6 +44,8 @@ const TargetBun = ({ type }) => {
         [cart]
     );
 
+    const name = `${bun?.name} (${type === 'top' ? 'верх' : 'низ'})`;
+
     return (
         (bun || (item && item.type === 'bun')) && (
             <div ref={targetRef} className={classNames(
@@ -52,7 +54,7 @@ const TargetBun = ({ type }) => {
                 bunState.canDrop && !bunState.isOver && styles.hilight, 
                 bunState.isOver && styles.hover
             )}>
-                {bun && <ConstructorElement type={type} isLocked text={bun.name} price={bun.price} thumbnail={bun.image} />}
+                {bun && <ConstructorElement type={type} isLocked text={name} price={bun.price} thumbnail={bun.image} />}
             </div>
         )
     )

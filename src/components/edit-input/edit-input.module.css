@@ -1,0 +1,6 @@
+.disabled div:first-child,
+.disabled label,
+.disabled input:disabled {
+    color: var(--text-inactive-color);
+    cursor: not-allowed;
+}

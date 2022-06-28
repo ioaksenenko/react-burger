@@ -1,10 +1,14 @@
-import { ADD_INGREDIENT, DEL_INGREDIENT, SET_INGREDIENT_IS_DRAG } from '../actions/constructor';
+import { 
+    ADD_INGREDIENT, DEL_INGREDIENT, SET_INGREDIENT,
+    SET_INGREDIENT_IS_DRAG, CLEAR_CART
+} from '../actions/constructor';
 import { v4 as uuidv4 } from 'uuid';
 import { addByIndexOrChangePosition } from '../../utils/constructor';
 
 const initialState = {
     cart: [],
-    ingredientIsDrag: false
+    ingredientIsDrag: false,
+    ingredient: null
 };
 
 export const constructorReducer = (state = initialState, action) => {
@@ -28,10 +32,22 @@ export const constructorReducer = (state = initialState, action) => {
                 cart: state.cart.filter(ingredient => ingredient.uuid !== action.uuid)
             };
         }
+        case SET_INGREDIENT: {
+            return {
+                ...state,
+                ingredient: action.ingredient ? {...action.ingredient} : null
+            };
+        }
         case SET_INGREDIENT_IS_DRAG: {
             return {
                 ...state,
                 ingredientIsDrag: action.isDrag
+            }
+        }
+        case CLEAR_CART: {
+            return {
+                ...state,
+                cart: []
             }
         }
         default: {

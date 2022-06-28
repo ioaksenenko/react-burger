@@ -1,24 +1,52 @@
 import React from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from 'react-router-dom';
+import {
+  ConstructorPage, OrderFeedPage, ProfilePage, 
+  LoginPage, RegisterPage, ForgotPasswordPage, 
+  ResetPasswordPage, IngredientPage,
+  NotFoundPage
+} from '../../pages';
 import Layout from '../layout/layout';
-import Constructor from '../constructor/constructor';
-import withFetch from '../hocs/with-fetch';
-import { ingredientsUrl } from '../../utils/data';
-import Modal from '../modal/modal';
+import ProtectedRoute from '../protected-route/protected-route';
 
-const WithFetchConstructor = withFetch(ingredientsUrl)(Constructor);
+const App = () => {
+  const location = useLocation();
 
-const App = () => (
-  <>
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<WithFetchConstructor />} />
-        <Route path="orders" element={<p className="text text_type_main-large">Лента заказов</p>} />
-        <Route path="profile" element={<p className="text text_type_main-large">Личный кабинет</p>} />
-      </Route>
-    </Routes>
-    <Modal />
-  </>
-);
+  const background = location.state?.background
+
+  return (
+    <Layout location={background || location}>
+      <Switch>
+        <Route exact path="/">
+          <ConstructorPage />
+        </Route>
+        <Route exact path="/order-feed">
+          <OrderFeedPage />
+        </Route>
+        <ProtectedRoute auth path="/profile">
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/login">
+          <LoginPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/register">
+          <RegisterPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/forgot-password">
+          <ForgotPasswordPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/reset-password">
+          <ResetPasswordPage />
+        </ProtectedRoute>
+        <Route exact path="/ingredients/:id">
+          {background ? <ConstructorPage /> : <IngredientPage />}
+        </Route>
+        <Route>
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </Layout>
+  );
+};
 
 export default App;

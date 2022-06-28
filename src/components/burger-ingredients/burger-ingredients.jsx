@@ -5,8 +5,8 @@ import IngredientTabs from '../ingredient-tabs/ingredient-tabs';
 
 const BurgerIngredients = () => (
   <>
-  <p className={classNames("text text_type_main-large", styles.title)}>Соберите бургер</p>
-  <IngredientTabs />
+    <p className={classNames("text text_type_main-large", styles.title)}>Соберите бургер</p>
+    <IngredientTabs />
   </>
 );
 

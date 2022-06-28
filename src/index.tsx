@@ -8,6 +8,7 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
+import Modal from './components/modal/modal';
 
 declare global {
   interface Window {
@@ -26,13 +27,12 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
       <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+      <Modal />
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
