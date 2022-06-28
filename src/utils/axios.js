@@ -25,17 +25,14 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
     response => response,
     async error => {
-        const config = error?.config;
         const token = window.localStorage.getItem('refreshToken');
-        if (error?.response?.status === 403 && token) {
+        const status = error?.response?.status;
+        const message = error?.response?.data?.message;
+        if (status === 403 && message === 'jwt expired' && token) {
             const response = await axiosInstance.post(TOKEN_URL, { data: { token: token } });
-            if (response.success) {
+            if (response?.success) {
                 setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
-                config.headers['Authorization'] = response.accessToken;
-                config.withCredentials = true;
-                return axiosInstance(config);
             }
-            return Promise.reject(error);
         }
         return Promise.reject(error);
     }

@@ -5,6 +5,7 @@ import { USER_URL, LOGIN_URL, LOGOUT_URL } from "../utils/urls";
 import { setCookie, deleteCookie } from "../utils/cookie";
 import { setModalTitle, setModalContent, openModal } from "../services/actions/modal";
 import ErrorMessage from "../components/error-message/error-message";
+import { forbidAll } from "../services/actions/protected-route";
 
 const useAuth = () => {
     const dispatch = useDispatch();
@@ -75,10 +76,11 @@ const useAuth = () => {
             deleteCookie('accessToken');
             window.localStorage.removeItem('refreshToken');
             dispatch(clearResponse(USER_URL));
+            dispatch(forbidAll);
         }
     }
 
-    const onLogoutError = (error) => {
+    const onLogoutError = () => {
         handleError('Не удалось выйти.');
     }
 

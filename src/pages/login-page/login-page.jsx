@@ -19,22 +19,33 @@ const LoginPage = () => {
         text: 'Восстановить пароль'
     }];
 
-    const [error, setError] = useState(null);
+    const [generalError, setGeneralError] = useState(null);
 
     const history = useHistory();
 
     const location = useLocation();
 
     const onSuccess = (data) => {
-        window.localStorage.setItem('refreshToken', data.refreshToken);
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
-        history.replace(location.state?.from || '/');
+        if (data?.success) {
+            window.localStorage.setItem('refreshToken', data.refreshToken);
+            setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+            history.replace(location.state?.from || '/');
+        } else {
+            setGeneralError(
+                data?.message || 
+                'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'
+            );
+        }
     }
 
     const onError = (error) => {
-        console.log(error);
         if (error === 'email or password are incorrect') {
-            setError('Некорректный e-mail или пароль');
+            setGeneralError('Некорректный e-mail или пароль');
+        } else {
+            setGeneralError(
+                error || 
+                'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'
+            );
         }
     }
 
@@ -46,7 +57,7 @@ const LoginPage = () => {
             links={links}
             onSuccess={onSuccess}
             onError = {onError}
-            errorText={error}
+            errorText={generalError}
         >
             <Input type="email" name="email" placeholder="E-mail" value='' />
             <PasswordInput name="password" />

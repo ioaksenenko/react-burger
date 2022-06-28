@@ -9,21 +9,34 @@ import { withAxios } from '../hocs';
 import classNames from 'classnames';
 import { sendRequest } from '../../services/actions/axios';
 import { clearForm } from '../../services/actions/form';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Form = ({method, action, title, links, buttonChildren, children, onSuccess, onError, errorText}) => {
     const dispatch = useDispatch();
     const form = useSelector(store => store.form[action]?.data);
+    const history = useHistory();
+    const location = useLocation();
 
     const handleSuccess = (data) => {
         onSuccess && onSuccess(data);
         dispatch(clearForm(action));
     }
 
+    const handleError = (error) => {
+        onError && onError(error);
+        if (error.message === 'jwt expired') {
+            history.push({
+                pathname: '/login',
+                state: { from: location }
+            });
+        }
+    }
+
     const WithAxiosButton = withAxios({
         method: method,
         url: action,
         data: form
-    }, handleSuccess, onError)(Button);
+    }, handleSuccess, handleError)(Button);
 
     const fields = useMemo(
         () => Array.isArray(children) ? children : [children],

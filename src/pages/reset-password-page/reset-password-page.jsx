@@ -22,14 +22,27 @@ const ResetPasswordPage = () => {
     const history = useHistory();
 
     const [tokenError, setTokenError] = useState(null);
+    const [generalError, setGeneralError] = useState(null);
 
-    const onSuccess = () => {
-        history.push('/login');
+    const onSuccess = (data) => {
+        if (data?.success) {
+            history.push('/login');
+        } else {
+            setGeneralError(
+                data?.message || 
+                'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'
+            );
+        }
     }
 
     const onError = (error) => {
         if (error === 'Incorrect reset token') {
             setTokenError('Некорректный код из письма');
+        } else {
+            setGeneralError(
+                error || 
+                'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'
+            );
         }
     }
 
@@ -43,6 +56,7 @@ const ResetPasswordPage = () => {
             links={links} 
             onSuccess={onSuccess} 
             onError={onError}
+            errorText={generalError}
         >
             <Input 
                 type={visiblePassword ? 'text' : 'password'}

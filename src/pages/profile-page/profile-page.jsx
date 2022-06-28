@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import styles from './profile-page.module.css';
 import { useRouteMatch, Switch, Route } from 'react-router-dom';
 import OrderHistoryPage from '../order-history-page/order-history-page';
@@ -7,11 +7,14 @@ import classNames from 'classnames';
 import ProfileForm from '../../components/profile-form/profile-form';
 import { useAuth } from '../../hooks';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { forbidAll } from '../../services/actions/protected-route';
 
 const ProfilePage = () => {
     const { path, url } = useRouteMatch();
     const { logout } = useAuth();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const onLogoutSuccess = () => {
         history.replace('/');
@@ -26,6 +29,14 @@ const ProfilePage = () => {
         ({ navigate, ...props }, ref) => (
             <a ref={ref} {...props} onClick={handleLogoutClick}>{props.children}</a>
         )
+    );
+
+    useEffect(
+        () => {
+            return () => {
+                dispatch(forbidAll());
+            }
+        }
     );
 
     return (

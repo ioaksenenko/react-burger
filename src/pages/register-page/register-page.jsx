@@ -16,16 +16,29 @@ const RegisterPage = () => {
     const history = useHistory();
 
     const [emailError, setEmailError] = useState(null);
+    const [generalError, setGeneralError] = useState(null);
 
-    const onSuccess = () => {
-        history.push('/login');
+    const onSuccess = (data) => {
+        if (data?.success) {
+            history.push('/login');
+        } else {
+            setGeneralError(
+                data?.message || 
+                'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'
+            );
+        }
     }
 
     const onError = (error) => {
         if (error === 'User already exists') {
             setEmailError('Пользователь с таким e-mail уже существует');
+        } else if (error === 'Email, password and name are required fields') {
+            setGeneralError('Необходимо заполнить обязательные поля');
         } else {
-            return null;
+            setGeneralError(
+                error || 
+                'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'
+            );
         }
     };
 
@@ -39,6 +52,7 @@ const RegisterPage = () => {
             links={links} 
             onSuccess={onSuccess} 
             onError={onError}
+            errorText={generalError}
         >
             <Input type="text" placeholder="Имя" name="name" size="default" value='' />
             <Input type="email" name="email" placeholder="E-mail" value='' {...emailErrorProps} />

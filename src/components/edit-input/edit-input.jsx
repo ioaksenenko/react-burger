@@ -2,17 +2,14 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './edit-input.module.css';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { sendRequest } from '../../services/actions/axios';
-import { USER_URL } from '../../utils/urls';
 import PropTypes from 'prop-types';
 
-const EditInput = ({type, placeholder, name, value, onChange, url}) => {
+const EditInput = ({type, placeholder, name, value, onChange, url, error, errorText}) => {
     const inputRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const dispatch = useDispatch();
-    const form = useSelector(store => store.form[url]?.data);
-    const user = useSelector(store => store.axios[USER_URL]?.data?.user);
 
     const onIconClick = () => {
         inputRef.current.removeAttribute('disabled');
@@ -24,22 +21,16 @@ const EditInput = ({type, placeholder, name, value, onChange, url}) => {
         () => {
             inputRef.current.setAttribute('disabled', true);
             setDisabled(true);
-        },
-        []
-    );
-
-    useEffect(
-        () => {
-            if (disabled && user && form && form[name] !== user[name]) {
+            if (value) {
+                console.log(value);
                 dispatch(sendRequest(url));
             }
         },
-        [disabled, dispatch, form, name, url, user]
+        [dispatch, url, value]
     );
 
     useEffect(
         () => {
-            disableInput();
             let ref = inputRef.current;
             ref.addEventListener("blur", disableInput, false);
             return () => {
@@ -47,6 +38,22 @@ const EditInput = ({type, placeholder, name, value, onChange, url}) => {
             }
         }, 
         [disableInput]
+    );
+
+    useEffect(
+        () => {
+            inputRef.current.setAttribute('disabled', true);
+        },
+        []
+    );
+
+    useEffect(
+        () => {
+            if (error) {
+                onIconClick();
+            }
+        },
+        [error]
     );
 
     return (
@@ -61,6 +68,8 @@ const EditInput = ({type, placeholder, name, value, onChange, url}) => {
                 ref={inputRef}
                 onIconClick={onIconClick}
                 size="default"
+                error={error}
+                errorText={errorText}
             />
         </div>
     );
@@ -72,7 +81,9 @@ EditInput.propTypes = {
     name: PropTypes.string.isRequired,
     value: PropTypes.string,
     onChange: PropTypes.func,
-    url: PropTypes.string
+    url: PropTypes.string,
+    error: PropTypes.bool,
+    errorText: PropTypes.string
 };
 
 export default EditInput;
