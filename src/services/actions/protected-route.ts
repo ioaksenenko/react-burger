@@ -1,16 +1,23 @@
-export const ALLOW_ROUTE = 'ALLOW_ROUTE';
-export const FORBID_ALL = 'FORBID_ALL';
+import { ALLOW_ROUTE, FORBID_ALL } from '../constants';
 
-export interface IProtectedRouteAction {
-    type: 'ALLOW_ROUTE' | 'FORBID_ALL';
-    path: string;
+export interface IAllowRouteAction {
+    readonly type: typeof ALLOW_ROUTE;
+    readonly path: string;
 };
 
-export const allowRoute = (path: string) => ({
+export interface IForbidAllAction {
+    readonly type: typeof FORBID_ALL;
+};
+
+export type TProtectedRouteActions = 
+    | IAllowRouteAction
+    | IForbidAllAction;
+
+export const allowRoute = (path: string): IAllowRouteAction => ({
     type: ALLOW_ROUTE,
     path
 });
 
-export const forbidAll = () => ({
+export const forbidAll = (): IForbidAllAction => ({
     type: FORBID_ALL
 });

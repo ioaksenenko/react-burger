@@ -4,6 +4,7 @@ import styles from './register-page.module.css';
 import Form from '../../components/form/form';
 import { REGISTER_URL } from '../../utils/urls';
 import { useHistory } from 'react-router-dom';
+import { TRegisterResponse, TResponseErrorDefault } from '../../services/types';
 
 const RegisterPage = () => {
     const links = [{
@@ -29,7 +30,7 @@ const RegisterPage = () => {
         }
     }
 
-    const onError = (error: TErrorDefault) => {
+    const onError = (error: TResponseErrorDefault) => {
         if (error.message === 'User already exists') {
             setEmailError('Пользователь с таким e-mail уже существует');
         } else if (error.message === 'Email, password and name are required fields') {

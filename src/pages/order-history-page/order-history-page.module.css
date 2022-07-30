@@ -1,0 +1,19 @@
+.orderInfoRoot {
+    width: 100%;
+}
+
+.orderInfoNumber {
+    display: none;
+}
+
+.orderFeedRoot {
+}
+
+.orderFeedTitle {
+    display: none;
+}
+
+.orderFeedFeed {
+    margin-top: 40px;
+}
+

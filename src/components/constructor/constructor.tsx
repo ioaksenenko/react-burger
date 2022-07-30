@@ -4,11 +4,11 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { INGREDIENTS_URL } from '../../utils/urls';
 
 const Constructor = () => {
-    const data = useSelector<IAxiosStore<TIngredientsResponse>>(store => store.axios[INGREDIENTS_URL]?.data);
+    const data = useSelector(store => store.axios[INGREDIENTS_URL]?.data);
 
     return data ? (
         <DndProvider backend={HTML5Backend}>

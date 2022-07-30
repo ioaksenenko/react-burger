@@ -1,13 +1,14 @@
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../services/hooks';
 import { request, clearResponse } from "../services/actions/axios";
 import { USER_URL, LOGIN_URL, LOGOUT_URL } from "../utils/urls";
 import { setCookie, deleteCookie } from "../utils/cookie";
 import { setModalTitle, setModalContent, openModal } from "../services/actions/modal";
 import { forbidAll } from "../services/actions/protected-route";
 import ErrorMessage from "../components/error-message/error-message";
+import { TSuccessCallback, TErrorCallback, TUserResponse, TResponseErrorDefault, TLoginResponse, TLogoutResponse } from '../services/types';
 
-const useAuth = () => {
+export const useAuth = () => {
     const dispatch = useDispatch();
 
     const handleError = (message: string | null) => {
@@ -29,14 +30,14 @@ const useAuth = () => {
 
     const getUser = useCallback((
         onSuccess: TSuccessCallback<TUserResponse> | null = null, 
-        onError: TErrorCallback<TErrorDefault> | null = null
+        onError: TErrorCallback<TResponseErrorDefault> | null = null
     ) => {
         request({
             method: 'get',
             url: USER_URL
         }, (data: TUserResponse) => {
             onSuccess && onSuccess(data);
-        }, (error: TErrorDefault) => {
+        }, (error: TResponseErrorDefault) => {
             onError && onError(error);
         })(dispatch);
     }, [dispatch]);
@@ -46,7 +47,7 @@ const useAuth = () => {
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
     }
 
-    const onLoginError = (error: TErrorDefault) => {
+    const onLoginError = (error: TResponseErrorDefault) => {
         let message = null;
         if (error.message === 'email or password are incorrect') {
             message = 'Некорректный e-mail или пароль';
@@ -58,7 +59,7 @@ const useAuth = () => {
         email: string,
         password: string,
         onSuccess: TSuccessCallback<TLoginResponse>,
-        onError: TErrorCallback<TErrorDefault>,
+        onError: TErrorCallback<TResponseErrorDefault>,
     ) => void;
     
     const login: TLogin = (email, password, onSuccess, onError) => {
@@ -72,7 +73,7 @@ const useAuth = () => {
         }, (data: TLoginResponse) => {
             onLoginSuccess(data);
             onSuccess && onSuccess(data);
-        }, (error: TErrorDefault) => {
+        }, (error: TResponseErrorDefault) => {
             onLoginError(error);
             onError && onError(error);
         })(dispatch);
@@ -87,13 +88,13 @@ const useAuth = () => {
         }
     }
 
-    const onLogoutError = (error: TErrorDefault) => {
+    const onLogoutError = (error: TResponseErrorDefault) => {
         handleError('Не удалось выйти.');
     }
 
     type TLogout = (
         onSuccess?: TSuccessCallback<TLogoutResponse> | null, 
-        onError?: TErrorCallback<TErrorDefault> | null
+        onError?: TErrorCallback<TResponseErrorDefault> | null
     ) => void;
 
     const logout: TLogout = (onSuccess = null, onError = null) => {
@@ -105,7 +106,7 @@ const useAuth = () => {
         }, (data: TLogoutResponse) => {
             onLogoutSuccess(data);
             onSuccess && onSuccess(data);
-        }, (error: TErrorDefault) => {
+        }, (error: TResponseErrorDefault) => {
             onLogoutError(error);
             onError && onError(error);
         })(dispatch);
@@ -113,5 +114,3 @@ const useAuth = () => {
 
     return { getUser, login, logout };
 }
-
-export default useAuth;

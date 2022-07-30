@@ -2,13 +2,14 @@ import React from 'react';
 import styles from './order-details.module.css';
 import classNames from 'classnames';
 import doneImage from '../../images/done.svg'
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { ORDERS_URL } from '../../utils/urls';
+import { TOrdersResponse, IAxiosData } from '../../services/types';
 
 const OrderDetails = () => {
     const response = useSelector<
-        IAxiosStore<TOrdersResponse>, 
-        IAxiosState<TOrdersResponse>
+        IAxiosData<TOrdersResponse>, 
+        TOrdersResponse
     >(store => store.axios[ORDERS_URL]);
 
     return response?.data && (

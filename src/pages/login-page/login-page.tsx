@@ -5,6 +5,7 @@ import Form from '../../components/form/form';
 import { LOGIN_URL } from '../../utils/urls';
 import { setCookie } from '../../utils/cookie';
 import { useHistory, useLocation } from 'react-router-dom';
+import { ILocationState, TLoginResponse, TResponseErrorDefault } from '../../services/types';
 
 const LoginPage = () => {
     const links = [{
@@ -28,7 +29,7 @@ const LoginPage = () => {
     const onSuccess = (data: TLoginResponse | null | undefined) => {
         if (data?.success) {
             window.localStorage.setItem('refreshToken', data.refreshToken);
-            setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+            setCookie('accessToken', data.accessToken.split('Bearer ')[1], {path: '/'});
             history.replace(location.state?.from || '/');
         } else {
             setGeneralError(
@@ -38,7 +39,7 @@ const LoginPage = () => {
         }
     }
 
-    const onError = (error: TErrorDefault) => {
+    const onError = (error: TResponseErrorDefault) => {
         if (error.message === 'email or password are incorrect') {
             setGeneralError('Некорректный e-mail или пароль');
         } else {

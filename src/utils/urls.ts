@@ -12,3 +12,6 @@ export const LOGOUT_URL = '/auth/logout';
 
 export const INGREDIENTS_URL = '/ingredients';
 export const ORDERS_URL = '/orders';
+
+export const WS_ORDERS_ALL_URL = 'wss://norma.nomoreparties.space/orders/all';
+export const WS_ORDERS_USER_URL = 'wss://norma.nomoreparties.space/orders';

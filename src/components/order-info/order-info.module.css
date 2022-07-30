@@ -1,0 +1,55 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    max-width: 640px;
+    align-self: center;
+}
+
+.number {
+    text-align: center;
+}
+
+.name {
+    margin-top: 40px;
+}
+
+.status {
+    margin-top: 12px;
+}
+
+.composition {
+    margin-top: 60px; 
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px; 
+    max-height: 312px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.paddingRight {
+    padding-right: 24px;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}

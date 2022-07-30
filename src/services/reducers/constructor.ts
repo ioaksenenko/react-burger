@@ -1,21 +1,25 @@
 import { 
-    ADD_INGREDIENT, DEL_INGREDIENT, SET_INGREDIENT,
-    SET_INGREDIENT_IS_DRAG, CLEAR_CART, IConstructorAction
-} from '../actions/constructor';
+    ADD_INGREDIENT, 
+    DEL_INGREDIENT, 
+    SET_INGREDIENT, 
+    SET_INGREDIENT_IS_DRAG, 
+    CLEAR_CART 
+} from "../constants";
+import { TConstructorActions } from "../actions";
 import { v4 as uuidv4 } from 'uuid';
 import { addByIndexOrChangePosition } from '../../utils/constructor';
+import { IConstructorState } from '../types';
 
-const initialState : IConstructorState = {
+const initialState: IConstructorState = {
     cart: [],
     ingredientIsDrag: false,
     ingredient: null
 };
 
-interface IConstructorReducer {
-    (state: IConstructorState, action: IConstructorAction): void;
-};
-
-export const constructorReducer : IConstructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+    state: IConstructorState = initialState,
+    action: TConstructorActions
+): IConstructorState => {
     switch (action.type) {
         case ADD_INGREDIENT: {
             const bun = state.cart.find(ingredient => ingredient.type === 'bun');

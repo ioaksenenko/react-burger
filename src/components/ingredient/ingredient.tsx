@@ -3,12 +3,13 @@ import styles from './ingredient.module.css';
 import classNames from 'classnames';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrag } from "react-dnd";
 import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from '../../services/actions/modal';
 import { setIngredientIsDrag } from '../../services/actions/constructor';
 import { setIngredient } from '../../services/actions/constructor';
 import { useHistory, useLocation } from 'react-router-dom';
+import { TIngredient } from '../../services/types';
 
 interface IIngredientProps {
     readonly ingredient: TIngredient;
@@ -16,7 +17,7 @@ interface IIngredientProps {
 
 const Ingredient : FC<IIngredientProps> = ({ ingredient }) => {
     const [count, setCount] = useState(0);
-    const cart = useSelector<IConstructorStore, ReadonlyArray<TIngredient>>(store => store.con.cart);
+    const cart = useSelector(store => store.con.cart);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();

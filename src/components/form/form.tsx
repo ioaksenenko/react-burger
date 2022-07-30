@@ -3,15 +3,21 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TICons } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons';
 import styles from './form.module.css';
 import { QuestionLink, IQuestionLinkProps } from '../question-link/question-link';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { setValue } from '../../services/actions/form';
 import { withAxios } from '../hocs';
 import classNames from 'classnames';
 import { sendRequest } from '../../services/actions/axios';
 import { clearForm } from '../../services/actions/form';
 import { useHistory, useLocation } from 'react-router-dom';
+import { 
+    TResponseDataDefault, 
+    TResponseErrorDefault, 
+    IFormFields, 
+    IButtonProps 
+} from '../../services/types';
 
-interface IFormProps<TResponseData extends object, TResponseError extends object> {
+interface IFormProps<TResponseData = TResponseDataDefault, TResponseError = TResponseErrorDefault> {
     readonly method?: "post" | "patch";
     readonly action: string;
     readonly title?: string;
@@ -21,6 +27,9 @@ interface IFormProps<TResponseData extends object, TResponseError extends object
     readonly onSuccess?: (data: TResponseData | null | undefined) => void;
     readonly onError?: (error: TResponseError) => void;
     readonly errorText: string | null;
+    readonly classes?: {
+        readonly root?: string;
+    };
 };
 
 interface IInputElementProps {
@@ -43,8 +52,8 @@ interface IInputElementProps {
 };
 
 const Form = <
-    TResponseData extends object, 
-    TResponseError extends object
+    TResponseData = TResponseDataDefault,
+    TResponseError extends TResponseErrorDefault = TResponseErrorDefault
 >(
     {
         method, 
@@ -55,11 +64,12 @@ const Form = <
         children, 
         onSuccess, 
         onError, 
-        errorText
+        errorText,
+        classes
     } : IFormProps<TResponseData, TResponseError>
 ): ReactElement | null => {
     const dispatch = useDispatch();
-    const form = useSelector<IFormStore, IFormFields>(store => store.form[action]?.data);
+    const form = useSelector(store => store.form[action]?.data);
     const history = useHistory();
     const location = useLocation();
 
@@ -68,7 +78,7 @@ const Form = <
         dispatch(clearForm(action));
     }
 
-    const handleError = (error: TResponseError & TErrorDefault) => {
+    const handleError = (error: TResponseError) => {
         onError && onError(error);
         if (error.message === 'jwt expired') {
             history.push({
@@ -110,26 +120,26 @@ const Form = <
     }
 
     return (
-        <>
-        {title && <p className={classNames("text text_type_main-medium", styles.title)}>{title}</p>}
-        <form className={classNames(styles.form, errorText && styles.error)} onSubmit={handleSubmit}>
-            {errorText && <p className={classNames("text text_type_main-default", styles.errorText)}>{errorText}</p>}
-            {Children.map(
-                fields, 
-                field => cloneElement(
-                    field, {
-                        value: (form && form[field.props.name]) || '',
-                        onChange,
-                        url: action
-                    }
-                )
-            )}
-            <div className={classNames(styles.button, !buttonChildren && styles.hide)}>
-                <WithAxiosButton type="primary" size="medium">{buttonChildren}</WithAxiosButton>
-            </div>
-        </form>
-        {links && links.map((link, index) => <QuestionLink key={index} {...link} />)}
-        </>
+        <div className={classNames(classes?.root)}>
+            {title && <p className={classNames("text text_type_main-medium", styles.title)}>{title}</p>}
+            <form className={classNames(styles.form, errorText && styles.error)} onSubmit={handleSubmit}>
+                {errorText && <p className={classNames("text text_type_main-default", styles.errorText)}>{errorText}</p>}
+                {Children.map(
+                    fields, 
+                    field => cloneElement(
+                        field, {
+                            value: (form && form[field.props.name]) || '',
+                            onChange,
+                            url: action
+                        }
+                    )
+                )}
+                <div className={classNames(styles.button, !buttonChildren && styles.hide)}>
+                    <WithAxiosButton type="primary" size="medium">{buttonChildren}</WithAxiosButton>
+                </div>
+            </form>
+            {links && links.map((link, index) => <QuestionLink key={index} {...link} />)}
+        </div>
     );
 };
 

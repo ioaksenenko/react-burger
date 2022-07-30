@@ -1,0 +1,36 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: calc(100vh - 90px);
+}
+
+.title {
+    margin-top: 40px;
+    padding-left: 8px;
+}
+
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-top: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.feed::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feed::-webkit-scrollbar-track {
+    background: #2F2F37;
+    margin-bottom: 60px;
+}
+
+.feed::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}

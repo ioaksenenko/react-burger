@@ -4,7 +4,7 @@ import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { closeModal, setModalContent, setModalTitle, setModalCloseCallback } from '../../services/actions/modal';
 
 const modalRoot = document.getElementById('modalRoot') || document.createElement('modalRoot');
@@ -13,7 +13,7 @@ const Modal = () => {
     const { 
         modalIsOpen, modalTitle, 
         modalContent, modalOnClose 
-    } = useSelector<IModalStore, IModalState>(store => store.modal);
+    } = useSelector(store => store.modal);
     const dispatch = useDispatch();
 
     const handleClose = () => {
@@ -41,7 +41,9 @@ const Modal = () => {
         <>
         <div className={classNames(styles.modal, modalIsOpen ? styles.show : styles.hide)}>
             <div className={styles.head}>
-                <p className={classNames("text text_type_main-large", styles.title)}>{modalTitle}</p>
+                {typeof modalTitle === 'string' || !modalTitle
+                    ? <p className={classNames("text text_type_main-large", styles.title)}>{modalTitle}</p> 
+                    : modalTitle}
                 <span className={styles.closeIcon} onClick={handleClose}><CloseIcon type="primary" /></span>
             </div>
             <div className={styles.body}>{modalContent}</div>

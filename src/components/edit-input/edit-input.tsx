@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback, ChangeEvent, FC } from
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './edit-input.module.css';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { sendRequest } from '../../services/actions/axios';
 
 interface IEditInputProps {

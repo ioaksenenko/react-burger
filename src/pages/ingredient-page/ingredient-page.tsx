@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { setIngredient } from '../../services/actions/constructor';
 import { INGREDIENTS_URL } from '../../utils/urls';
 import { withAxios } from '../../components/hocs';
 import { sendRequest } from '../../services/actions/axios';
+import { IReactRouterDomParams, TIngredientsResponse } from '../../services/types';
 
 const IngredientPage = () => {
     const params = useParams<IReactRouterDomParams>();

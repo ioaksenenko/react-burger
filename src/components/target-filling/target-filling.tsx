@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import styles from './target-filling.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { addIngredient, delIngredient } from '../../services/actions/constructor';
 import { useDrop } from "react-dnd";
 import classNames from 'classnames';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TIngredient } from '../../services/types';
 
 interface IDragFillingProps {
     readonly ingredient?: TIngredient;
@@ -25,10 +26,7 @@ type TTarget = EventTarget & {
 
 const TargetFilling: FC<IDragFillingProps> = ({ ingredient }) => {
     const dispatch = useDispatch();
-    const cart = useSelector<
-        IConstructorStore, 
-        ReadonlyArray<TIngredient>
-    >(store => store.con.cart);
+    const cart = useSelector(store => store.con.cart);
 
     const [{ canDrop, isOver, item }, targetRef] = useDrop<TIngredient, void, IDropState>({
         accept: "filling",

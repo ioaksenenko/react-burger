@@ -1,0 +1,12 @@
+.root {
+    display: flex;
+    gap: 60px;
+}
+
+.orderInfoRoot {
+    width: 100%;
+}
+
+.orderInfoNumber {
+    display: none;
+}

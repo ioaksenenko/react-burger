@@ -1,3 +1,5 @@
+import { TIngredient } from '../services/types';
+
 interface IAddByIndexOrChangePosition {(
     array: ReadonlyArray<TIngredient>, 
     item: TIngredient, 

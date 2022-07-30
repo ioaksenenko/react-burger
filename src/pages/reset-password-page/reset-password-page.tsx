@@ -4,6 +4,7 @@ import styles from './reset-password-page.module.css';
 import Form from '../../components/form/form';
 import { RESET_URL } from '../../utils/urls';
 import { useHistory } from 'react-router-dom';
+import { TResetPasswordResponse, TResponseErrorDefault } from '../../services/types';
 
 const ResetPasswordPage = () => {
     const links = [{
@@ -35,7 +36,7 @@ const ResetPasswordPage = () => {
         }
     }
 
-    const onError = (error: TErrorDefault) => {
+    const onError = (error: TResponseErrorDefault) => {
         if (error.message === 'Incorrect reset token') {
             setTokenError('Некорректный код из письма');
         } else {

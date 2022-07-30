@@ -1,11 +1,12 @@
 import React, { useMemo, useEffect, FC } from 'react';
 import styles from './target-bun.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { addIngredient } from '../../services/actions/constructor';
 import { useDrop } from "react-dnd";
 import classNames from 'classnames';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setBunState } from '../../services/actions/target-bun';
+import { TIngredient } from '../../services/types';
 
 interface ITargetBunProps {
     readonly type: "top" | "bottom" | undefined
@@ -19,8 +20,8 @@ interface IDropState {
 
 const TargetBun: FC<ITargetBunProps> = ({ type }) => {
     const dispatch = useDispatch();
-    const cart = useSelector<IConstructorStore, ReadonlyArray<TIngredient>>(store => store.con.cart);
-    const bunState = useSelector<ITargetBunStore, ITargetBunState>(store => store.bun);
+    const cart = useSelector(store => store.con.cart);
+    const bunState = useSelector(store => store.bun);
 
     const [{ canDrop, isOver, item }, targetRef] = useDrop<TIngredient, void, IDropState>({
         accept: "bun",

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import {
-  ConstructorPage, OrderFeedPage, ProfilePage, 
+  ConstructorPage, FeedPage, ProfilePage, 
   LoginPage, RegisterPage, ForgotPasswordPage, 
   ResetPasswordPage, IngredientPage,
-  NotFoundPage
+  NotFoundPage, OrderPage
 } from '../../pages';
 import Layout from '../layout/layout';
 import ProtectedRoute from '../protected-route/protected-route';
+import { ILocationState } from '../../services/types';
+import { WS_ORDERS_ALL_URL } from '../../utils/urls';
 
 const App = () => {
   const location = useLocation<ILocationState>();
@@ -20,8 +22,11 @@ const App = () => {
         <Route exact path="/">
           <ConstructorPage />
         </Route>
-        <Route exact path="/order-feed">
-          <OrderFeedPage />
+        <Route exact path="/feed">
+          <FeedPage />
+        </Route>
+        <Route exact path="/feed/:id">
+          {background ? <FeedPage /> : <OrderPage url={WS_ORDERS_ALL_URL} />}
         </Route>
         <ProtectedRoute auth path="/profile">
           <ProfilePage />

@@ -1,11 +1,14 @@
-export const SET_BUN_STATE = 'SET_BUN_STATE';
+import { SET_BUN_STATE } from '../constants';
+import { ITargetBunState } from '../types';
 
-export interface ITargetBunStateAction {
-    type: 'SET_BUN_STATE';
-    state: ITargetBunState;
+export interface ISetBunStateAction {
+    readonly type: typeof SET_BUN_STATE;
+    readonly state: ITargetBunState;
 };
 
-export const setBunState = (state: ITargetBunState) => ({
+export type TTargetBunActions = ISetBunStateAction;
+
+export const setBunState = (state: ITargetBunState): ISetBunStateAction => ({
     type: SET_BUN_STATE,
     state
 });

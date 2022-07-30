@@ -1,0 +1,4 @@
+export const SEND_REQUEST: 'SEND_REQUEST' = 'SEND_REQUEST';
+export const SET_DATA: 'SET_DATA' = 'SET_DATA';
+export const SET_ERROR: 'SET_ERROR' = 'SET_ERROR';
+export const CLEAR_RESPONSE: 'CLEAR_RESPONSE' = 'CLEAR_RESPONSE';
