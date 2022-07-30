@@ -49,5 +49,5 @@ interface IDeleteCookie {
 };
 
 export const deleteCookie: IDeleteCookie = (name) => {
-    setCookie(name, null, { expires: -1 });
+    setCookie(name, null, { expires: -1, path: '/' });
 }

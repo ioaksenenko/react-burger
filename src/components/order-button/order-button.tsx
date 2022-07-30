@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from '../../services/hooks';
 import { withAxios } from "../hocs";
 import OrderDetails from "../order-details/order-details";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,13 +9,20 @@ import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from
 import { sendRequest } from "../../services/actions/axios";
 import { useAuth } from "../../hooks";
 import { clearCart } from "../../services/actions/constructor";
+import { 
+    TUserData,
+    TUserResponse,
+    TOrdersResponse,
+    TResponseErrorDefault,
+    IButtonProps
+} from '../../services/types';
 
 interface TRequestData {
     readonly ingredients: ReadonlyArray<string>;
 };
 
 const OrderButton = () => {
-    const cart = useSelector<IConstructorStore, ReadonlyArray<TIngredient>>(store => store.con.cart);
+    const cart = useSelector(store => store.con.cart);
     const history = useHistory();
     const dispatch = useDispatch();
     const [user, setUser] = useState<TUserData | null>(null);
@@ -64,7 +71,7 @@ const OrderButton = () => {
     const WithAxiosButton = withAxios<
         TRequestData, 
         TOrdersResponse, 
-        TErrorDefault, 
+        TResponseErrorDefault, 
         IButtonProps
     >({
       method: 'post',

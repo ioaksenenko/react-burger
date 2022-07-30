@@ -1,14 +1,13 @@
-import { SEND_REQUEST, SET_DATA, SET_ERROR, CLEAR_RESPONSE, TAxiosAction } from "../actions/axios";
+import { TAxiosActions } from '../actions';
+import { SEND_REQUEST, SET_DATA, SET_ERROR, CLEAR_RESPONSE } from '../constants';
+import { IAxiosState, TResponseDataDefault, TResponseErrorDefault } from '../types';
 
-const initialState = {};
+const initialState = { };
 
-interface IAxiosReducer {
-    <TResponseData extends object, TResponseError extends object>(
-        state: IAxiosState<TResponseData>, action: TAxiosAction<TResponseData, TResponseError>
-    ): void;
-};
-
-export const axiosReducer : IAxiosReducer = (state = initialState, action) => {
+export const axiosReducer = <TResponseData = TResponseDataDefault, TResponseError = TResponseErrorDefault>(
+    state: IAxiosState<TResponseData, TResponseError> = initialState, 
+    action: TAxiosActions<TResponseData, TResponseError>
+): IAxiosState<TResponseData, TResponseError> => {
     switch (action.type) {
         case SEND_REQUEST: {
             return {

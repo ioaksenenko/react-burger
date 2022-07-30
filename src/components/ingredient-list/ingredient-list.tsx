@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import styles from './ingredient-list.module.css';
 import Ingredient from '../ingredient/ingredient';
+import { TIngredient } from '../../services/types';
 
 interface IIngredientListProps {
   id: string;

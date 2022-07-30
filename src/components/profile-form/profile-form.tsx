@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import styles from './profile-form.module.css'
 import EditInput from '../../components/edit-input/edit-input';
 import Form from '../../components/form/form';
 import { USER_URL } from '../../utils/urls';
-import { useSelector } from "react-redux";
+import { useSelector } from '../../services/hooks';
+import { TUserData, TUserResponse, TResponseErrorDefault } from '../../services/types';
 
 const ProfileForm = () => {
-    const user = useSelector<
-        IAxiosStore<TUserResponse>, 
-        TUserData
-    >(store => store.axios[USER_URL]?.data?.user);
+    const user = useSelector<TUserData | undefined, TUserResponse>(
+        store => store.axios[USER_URL]?.data?.user
+    );
     const [emailError, setEmailError] = useState<string | null>(null);
     const [generalError, setGeneralError] = useState<string | null>(null);
 
@@ -22,7 +23,7 @@ const ProfileForm = () => {
         }
     }
     
-    const onError = (error: TErrorDefault) => {
+    const onError = (error: TResponseErrorDefault) => {
         if (error.message === 'User with such email already exists') {
             setEmailError('Пользователь с таким E-mail уже существует');
         } else {
@@ -36,7 +37,7 @@ const ProfileForm = () => {
     const emailErrorProps = emailError ? { error: true, errorText: emailError } : { };
 
     return (
-        <Form action={USER_URL} method='patch' onError={onError} onSuccess={onSuccess} errorText={generalError}>
+        <Form action={USER_URL} method='patch' onError={onError} onSuccess={onSuccess} errorText={generalError} classes={{root: styles.root}}>
             <EditInput type="text" placeholder="Имя" name="name" initial={user?.name} />
             <EditInput type="email" placeholder="Логин" name="email" initial={user?.email} {...emailErrorProps} />
             <EditInput type="password" placeholder="Пароль" name="password" />

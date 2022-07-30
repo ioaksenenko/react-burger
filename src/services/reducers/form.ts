@@ -1,12 +1,13 @@
-import { SET_VALUE, CLEAR_FORM, IFormAction } from "../actions/form";
+import { SET_VALUE, CLEAR_FORM } from '../constants';
+import { TFormActions } from '../actions';
+import { IFormState } from '../types';
 
 const initialState = { };
 
-interface IFormReducer {
-    (state: IFormState, action: IFormAction): void;
-};
-
-export const formReducer : IFormReducer = (state = initialState, action) => {
+export const formReducer = (
+    state: IFormState = initialState, 
+    action: TFormActions
+): IFormState => {
     switch (action.type) {
         case SET_VALUE: {
             return {

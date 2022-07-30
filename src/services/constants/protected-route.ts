@@ -1,0 +1,2 @@
+export const ALLOW_ROUTE: 'ALLOW_ROUTE' = 'ALLOW_ROUTE';
+export const FORBID_ALL: 'FORBID_ALL' = 'FORBID_ALL';

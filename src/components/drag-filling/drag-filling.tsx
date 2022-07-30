@@ -3,6 +3,7 @@ import styles from './drag-filling.module.css';
 import TargetFilling from '../target-filling/target-filling';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
+import { TIngredient } from '../../services/types';
 
 interface IDragFillingProps {
     readonly ingredient: TIngredient;

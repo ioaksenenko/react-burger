@@ -3,11 +3,11 @@ import styles from './burger-constructor.module.css';
 import Burger from '../burger/burger';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import OrderButton from '../order-button/order-button';
 
 const BurgerConstructor = () => {
-  const cart = useSelector<IConstructorStore, ReadonlyArray<TIngredient>>(store => store.con.cart);
+  const cart = useSelector(store => store.con.cart);
 
   const bun = useMemo(
     () => cart.find(

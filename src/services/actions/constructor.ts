@@ -1,37 +1,65 @@
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const DEL_INGREDIENT = 'DEL_INGREDIENT';
-export const SET_INGREDIENT = 'SET_INGREDIENT';
-export const SET_INGREDIENT_IS_DRAG = 'SET_INGREDIENT_IS_DRAG';
-export const CLEAR_CART = 'CLEAR_CART';
+import { 
+    ADD_INGREDIENT, 
+    DEL_INGREDIENT, 
+    SET_INGREDIENT, 
+    SET_INGREDIENT_IS_DRAG, 
+    CLEAR_CART 
+} from "../constants";
+import { TIngredient } from '../types';
 
-export interface IConstructorAction {
-    type: 'ADD_INGREDIENT' | 'DEL_INGREDIENT' | 'SET_INGREDIENT' | 'SET_INGREDIENT_IS_DRAG' | 'CLEAR_CART';
-    ingredient: TIngredient;
-    index: number;
-    uuid: string;
-    isDrag: boolean;
-}
+export interface IAddIngredientAction {
+    readonly type: typeof ADD_INGREDIENT;
+    readonly ingredient: TIngredient;
+    readonly index: number;
+};
 
-export const addIngredient = (ingredient: TIngredient, index: number = 0) => ({
+export interface IDelIngredientAction {
+    readonly type: typeof DEL_INGREDIENT;
+    readonly uuid: string;
+};
+
+export interface ISetIngredientAction {
+    readonly type: typeof SET_INGREDIENT;
+    readonly ingredient: TIngredient;
+};
+
+export interface ISetIngredientIsDragAction {
+    readonly type: typeof SET_INGREDIENT_IS_DRAG;
+    readonly isDrag: boolean;
+};
+
+export interface IClearCartAction {
+    readonly type: typeof CLEAR_CART;
+};
+
+export type TConstructorActions = 
+    | IAddIngredientAction
+    | IDelIngredientAction
+    | ISetIngredientAction
+    | ISetIngredientIsDragAction
+    | IClearCartAction;
+
+export const addIngredient = (ingredient: TIngredient, index: number = 0): IAddIngredientAction => ({
     type: ADD_INGREDIENT,
-    ingredient, index
+    ingredient, 
+    index
 });
 
-export const delIngredient = (uuid: string) => ({
+export const delIngredient = (uuid: string): IDelIngredientAction => ({
     type: DEL_INGREDIENT,
     uuid
 });
 
-export const setIngredientIsDrag = (isDrag: boolean) => ({
-    type: SET_INGREDIENT_IS_DRAG,
-    isDrag
-});
-
-export const setIngredient = (ingredient: TIngredient) => ({
+export const setIngredient = (ingredient: TIngredient): ISetIngredientAction => ({
     type: SET_INGREDIENT,
     ingredient
 });
 
-export const clearCart = () => ({
+export const setIngredientIsDrag = (isDrag: boolean): ISetIngredientIsDragAction => ({
+    type: SET_INGREDIENT_IS_DRAG,
+    isDrag
+});
+
+export const clearCart = (): IClearCartAction => ({
     type: CLEAR_CART
 });

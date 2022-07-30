@@ -1,21 +1,28 @@
 import React, { useEffect, useCallback, FC } from 'react';
 import Loader from '../loader/loader';
 import ErrorMessage from '../error-message/error-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { openModal, setModalTitle, setModalContent } from '../../services/actions/modal';
 import { request } from '../../services/actions/axios';
+import { 
+    TResponseDataDefault, 
+    TResponseErrorDefault, 
+    TAxiosConfig, 
+    TSuccessCallback, 
+    TErrorCallback 
+} from '../../services/types';
 
-const withAxios = <
-    TRequestData extends object,
-    TResponseData extends object, 
-    TResponseError extends object, 
-    TFCProps extends object
+export const withAxios = <
+    TRequestData,
+    TResponseData = TResponseDataDefault, 
+    TResponseError = TResponseErrorDefault, 
+    TFCProps = { }
 >(
     config: TAxiosConfig<TRequestData>, 
     successCallback: TSuccessCallback<TResponseData> | null = null, 
     errorCallback: TErrorCallback<TResponseError> | null = null
 ) => (WrappedComponent : FC<TFCProps>) => (props: TFCProps) => {
-    const axios = useSelector<IAxiosStore<TResponseData>, IAxiosData<TResponseData>>(store => store.axios[config.url]);
+    const axios = useSelector(store => store.axios[config.url]);
     const dispatch = useDispatch();
 
     const handleSuccess = useCallback<TSuccessCallback<TResponseData>>(
@@ -63,5 +70,3 @@ const withAxios = <
         </>
     )
 };
-
-export default withAxios;

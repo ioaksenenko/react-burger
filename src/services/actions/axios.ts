@@ -1,35 +1,69 @@
-import { Dispatch } from "redux";
-import { axiosInstance } from "../../utils/axios";
+import { Dispatch } from 'redux';
+import { axiosInstance } from '../../utils/axios';
 
-export const SEND_REQUEST = 'SEND_REQUEST';
-export const SET_DATA = 'SET_DATA';
-export const SET_ERROR = 'SET_ERROR';
-export const CLEAR_RESPONSE = 'CLEAR_RESPONSE';
+import { 
+    SEND_REQUEST, 
+    SET_DATA, 
+    SET_ERROR, 
+    CLEAR_RESPONSE 
+} from '../constants';
 
-export const sendRequest = (url: string) => ({
+import { 
+    TSuccessCallback, 
+    TErrorCallback, 
+    TAxiosConfig, 
+    TResponseDataDefault, 
+    TResponseErrorDefault 
+} from '../types';
+
+export interface ISendRequestAction {
+    readonly type: typeof SEND_REQUEST;
+    readonly url: string;
+};
+
+export interface ISetDataAction<TResponseData = TResponseDataDefault> {
+    readonly type: typeof SET_DATA;
+    readonly url: string;
+    readonly data: TResponseData;
+};
+
+export interface ISetErrorAction<TResponseError = TResponseErrorDefault> {
+    readonly type: typeof SET_ERROR;
+    readonly url: string;
+    readonly error: TResponseError;
+};
+
+export interface IClearResponseAction {
+    readonly type: typeof CLEAR_RESPONSE;
+    readonly url: string;
+};
+
+export type TAxiosActions<
+    TResponseData = TResponseDataDefault, 
+    TResponseError = TResponseErrorDefault
+> = 
+    | ISendRequestAction
+    | ISetDataAction<TResponseData>
+    | ISetErrorAction<TResponseError>
+    | IClearResponseAction;
+
+export const sendRequest = (url: string): ISendRequestAction => ({
     type: SEND_REQUEST,
     url
 });
 
-export type TAxiosAction<TResponseData extends object, TResponseError extends object> = {
-    type: 'SEND_REQUEST' | 'SET_DATA' | 'SET_ERROR' | 'CLEAR_RESPONSE';
-    url: string;
-    data?: TResponseData;
-    error?: TResponseError;
-};
-
-export interface TRequest {
-    <TRequestData extends object, TResponseData extends object, TResponseError extends object>(
-        config : TAxiosConfig<TRequestData>, 
-        successCallback : TSuccessCallback<TResponseData>, 
-        errorCallback : TErrorCallback<TResponseError>
-    ): (
-        dispatch: Dispatch<TAxiosAction<TResponseData, TResponseError>>
-    ) => void;
-}
-
-export const request : TRequest = (config, successCallback, errorCallback) => dispatch => {
-    axiosInstance(config).then(response => {
+export const request = <
+    TRequestData, 
+    TResponseData = TResponseDataDefault, 
+    TResponseError = TResponseErrorDefault
+>(
+    config: TAxiosConfig<TRequestData>, 
+    successCallback: TSuccessCallback<TResponseData>, 
+    errorCallback: TErrorCallback<TResponseError>
+) => (
+    dispatch: Dispatch<ISetDataAction<TResponseData> | ISetErrorAction<TResponseError>>
+) => {
+    return axiosInstance(config).then(response => {
         if (response?.data?.success) {
             dispatch({
                 type: SET_DATA, 
@@ -55,7 +89,7 @@ export const request : TRequest = (config, successCallback, errorCallback) => di
     });
 }
 
-export const clearResponse = (url: string) => ({
+export const clearResponse = (url: string): IClearResponseAction => ({
     type: CLEAR_RESPONSE,
     url
 });

@@ -1,0 +1,37 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    min-width: 272px;
+}
+
+.title {
+    margin-bottom: 24px;
+}
+
+.numbers {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 320px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    overflow-x: auto;
+}
+
+.numbers::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.numbers::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.numbers::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+.hightlight {
+    color: #00CCCC;
+}

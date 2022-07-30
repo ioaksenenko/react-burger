@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import Constructor from '../../components/constructor/constructor';
-import withAxios from '../../components/hocs/with-axios';
+import { withAxios } from '../../components/hocs/with-axios';
 import { INGREDIENTS_URL } from '../../utils/urls';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { sendRequest } from '../../services/actions/axios';
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { setModalTitle, setModalContent, openModal, setModalCloseCallback } from '../../services/actions/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import { setIngredient } from '../../services/actions/constructor';
+import { ILocationState, IReactRouterDomParams, TIngredientsResponse } from '../../services/types';
 
 const ConstructorPage = () => {
     const dispatch = useDispatch();
