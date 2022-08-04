@@ -1,0 +1,89 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+    padding: 24px;
+    width: 584px;
+    height: auto;
+    gap: 24px;
+    background: #1C1C21;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ingredients {
+    position: relative;
+    height: 64px;
+    width: 314px;
+}
+
+.ingredient {
+    position: absolute !important;
+}
+
+.ingredient:nth-child(1) {
+    left: 0;
+    z-index: 6;
+}
+
+.ingredient:nth-child(2) {
+    left: 50px;
+    z-index: 5;
+}
+
+.ingredient:nth-child(3) {
+    left: 100px;
+    z-index: 4;
+}
+
+.ingredient:nth-child(4) {
+    left: 150px;
+    z-index: 3;
+}
+
+.ingredient:nth-child(5) {
+    left: 200px;
+    z-index: 2;
+}
+
+.ingredient:nth-child(6) {
+    left: 250px;
+    z-index: 1;
+}
+
+.muted {
+    opacity: 0.6;
+}
+
+.ingredientsCount {
+    position: absolute;
+    z-index: 2;
+    right: 20px;
+    top: 20px;
+}
+
+.order {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nameStatus {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.orderInfoRoot {
+    width: 100%;
+}
+
+.orderInfoNumber {
+    display: none;
+}

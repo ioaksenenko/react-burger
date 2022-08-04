@@ -5,6 +5,7 @@ import { modalReducer } from './modal';
 import { formReducer } from './form';
 import { axiosReducer } from './axios';
 import { protectedRouteReducer } from './protected-route';
+import { webSocketReducer } from './web-socket';
 
 export const rootReducer = combineReducers({
     con: constructorReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
     form: formReducer,
     axios: axiosReducer,
     route: protectedRouteReducer,
+    ws: webSocketReducer
 });

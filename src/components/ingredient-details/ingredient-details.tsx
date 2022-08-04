@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './ingredient-details.module.css';
 import classNames from 'classnames';
 import IngredientProperty from '../ingredient-property/ingredient-property';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 const IngredientDetails = () => {
-    const ingredient = useSelector<IConstructorStore, TIngredient | null>(store => store.con.ingredient);
+    const ingredient = useSelector(store => store.con.ingredient);
 
     return ingredient && (
         <div className={styles.root}>

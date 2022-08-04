@@ -1,0 +1,15 @@
+.root {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.name {
+    max-width: 320px;
+}
+
+.price {
+    display: flex;
+    gap: 9px;
+    margin-left: auto;
+}

@@ -3,8 +3,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-tabs.module.css';
 import TabPanel from '../tab-panel/tab-panel';
 import IngredientList from '../ingredient-list/ingredient-list';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { INGREDIENTS_URL } from '../../utils/urls';
+import { TIngredientsResponse, TIngredient } from '../../services/types';
 
 const IngredientTab: FC<{
   active: boolean;
@@ -14,7 +15,7 @@ const IngredientTab: FC<{
 }> = Tab;
 
 const IngredientTabs = () => {
-  const ingredients = useSelector<IAxiosStore<TIngredientsResponse>, ReadonlyArray<TIngredient>>(
+  const ingredients = useSelector<ReadonlyArray<TIngredient>, TIngredientsResponse>(
     store => store.axios[INGREDIENTS_URL]?.data?.data || []
   );
   const [activeTab, setActiveTab] = useState('buns');

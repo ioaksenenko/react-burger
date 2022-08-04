@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import styles from './burger.module.css';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import TargetFilling from '../target-filling/target-filling';
 import TargetBun from '../target-bun/target-bun';
 import DragFilling from '../drag-filling/drag-filling';
 
 const Burger = () => {
-    const { cart, ingredientIsDrag } = useSelector<IConstructorStore, IConstructorState>(store => store.con);
+    const { cart, ingredientIsDrag } = useSelector(store => store.con);
 
     const filling = useMemo(
         () => cart.filter(

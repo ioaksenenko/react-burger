@@ -1,22 +1,25 @@
-import { 
-    OPEN_MODAL, CLOSE_MODAL, 
-    SET_MODAL_TITLE, SET_MODAL_CONTENT, 
-    SET_MODAL_CLOSE_CALLBACK,
-    IModalAction
-} from "../actions/modal";
+import {
+    OPEN_MODAL,
+    CLOSE_MODAL, 
+    SET_MODAL_TITLE,
+    SET_MODAL_CONTENT,
+    SET_MODAL_CLOSE_CALLBACK
+} from '../constants';
 
-const initialState : IModalState = {
+import { TModalActions } from '../actions';
+import { IModalState } from '../types';
+
+const initialState: IModalState = {
     modalIsOpen: false,
     modalTitle: null,
     modalContent: null,
     modalOnClose: null
 };
 
-interface IModalReducer {
-    (state: IModalState, action: IModalAction): void;
-};
-
-export const modalReducer: IModalReducer = (state = initialState, action) => {
+export const modalReducer = (
+    state: IModalState = initialState, 
+    action: TModalActions
+): IModalState => {
     switch (action.type) {
         case OPEN_MODAL: {
             return {

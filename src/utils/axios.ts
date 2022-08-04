@@ -29,11 +29,33 @@ axiosInstance.interceptors.response.use(
         const status = error?.response?.status;
         const message = error?.response?.data?.message;
         if (status === 403 && message === 'jwt expired' && token) {
-            const response: {success: boolean; accessToken: string} = await axiosInstance.post(TOKEN_URL, { data: { token: token } });
-            if (response?.success) {
-                setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
-            }
+            await refreshToken(token);
         }
         return Promise.reject(error);
     }
 );
+
+export const refreshToken = async (token: string | null = null) => {
+    if (!token) {
+        token = window.localStorage.getItem('refreshToken');
+    }
+    type TResponse = {
+        success: boolean;
+        accessToken: string
+    };
+    try {
+        const response: TResponse = await axiosInstance.post(
+            TOKEN_URL, {
+                data: {
+                    token: token
+                }
+            }
+        );
+        if (response.success) {
+            setCookie(
+                'accessToken',
+                response.accessToken.split('Bearer ')[1]
+            )
+        }
+    } catch { };
+};

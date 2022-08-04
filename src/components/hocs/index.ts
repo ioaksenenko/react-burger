@@ -1,3 +1,3 @@
-import withAxios from "./with-axios";
-
-export { withAxios };
+export * from './with-axios';
+export * from './with-socket';
+export * from './with-ingredients';

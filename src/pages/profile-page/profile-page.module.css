@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     flex-grow: 1;
-    padding-top: 120px;
 }
 
 .links {
@@ -10,6 +9,7 @@
     flex-direction: column;
     margin-right: 60px;
     width: 320px;
+    margin-top: 120px;
 }
 
 .link {
@@ -21,7 +21,7 @@
 }
 
 .routes {
-    width: 480px;
+    display: flex;
 }
 
 .hint {

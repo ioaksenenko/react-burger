@@ -5,6 +5,7 @@ import Form from '../../components/form/form';
 import { PASSWORD_RESET_URL } from '../../utils/urls';
 import { useHistory } from 'react-router-dom';
 import { IQuestionLinkProps } from '../../components/question-link/question-link';
+import { TForgotPasswordResponse, TResponseErrorDefault } from '../../services/types';
 
 const ForgotPasswordPage = () => {
     const links : ReadonlyArray<IQuestionLinkProps> = [{
@@ -29,7 +30,7 @@ const ForgotPasswordPage = () => {
         }
     }
 
-    const onError = (error: TErrorDefault) => {
+    const onError = (error: TResponseErrorDefault) => {
         setGeneralError(
             error.message || 
             'Во время запроса произошла ошибка. Попробуйте повторить запрос позже.'

@@ -9,7 +9,7 @@
     justify-content: center;
     background-color: black;
     opacity: .6;
-    z-index: 1;
+    z-index: 99;
 }
 
 .hide {

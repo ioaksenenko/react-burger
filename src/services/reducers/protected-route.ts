@@ -1,12 +1,13 @@
-import { ALLOW_ROUTE, FORBID_ALL, IProtectedRouteAction } from "../actions/protected-route";
+import { ALLOW_ROUTE, FORBID_ALL } from '../constants';
+import { TProtectedRouteActions } from '../actions';
+import { IRouteState } from '../types';
 
 const initialState = { };
 
-interface IProtectedRouteReducer {
-    (state: IRouteState, action: IProtectedRouteAction): void;
-};
-
-export const protectedRouteReducer : IProtectedRouteReducer = (state = initialState, action) => {
+export const protectedRouteReducer = (
+    state: IRouteState = initialState, 
+    action: TProtectedRouteActions
+): IRouteState => {
     switch (action.type) {
         case ALLOW_ROUTE: {
             return {
