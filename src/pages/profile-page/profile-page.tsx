@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './profile-page.module.css';
 import { Switch, Route } from 'react-router-dom';
 import OrderHistoryPage from '../order-history-page/order-history-page';
@@ -7,18 +7,15 @@ import classNames from 'classnames';
 import ProfileForm from '../../components/profile-form/profile-form';
 import { useAuth } from '../../hooks';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { useDispatch } from '../../services/hooks';
-import { forbidAll } from '../../services/actions/protected-route';
 import { MouseEventHandler } from 'react';
 import { ILocationState } from '../../services/types';
 import OrderPage from '../order-page/order-page';
 import { WS_ORDERS_USER_URL } from '../../utils/urls';
-import { getCookie } from '../../utils/cookie';
+import { withSocket } from '../../components/hocs';
 
-const ProfilePage = () => {
+const ProfilePageContent = () => {
     const { logout } = useAuth();
     const history = useHistory();
-    const dispatch = useDispatch();
     const match = useRouteMatch('/profile/orders/:id');
 
     const onLogoutSuccess = () => {
@@ -30,19 +27,9 @@ const ProfilePage = () => {
         logout(onLogoutSuccess);
     };
 
-    useEffect(
-        () => {
-            return () => {
-                dispatch(forbidAll());
-            }
-        }
-    );
-
     const location = useLocation<ILocationState>();
 
     const background = location.state?.background;
-
-    const accessToken = getCookie('accessToken');
 
     return (
         <div className={styles.root}>
@@ -65,12 +52,18 @@ const ProfilePage = () => {
                         <OrderHistoryPage />
                     </Route>
                     <Route exact path="/profile/orders/:id">
-                        {background ? <OrderHistoryPage /> : <OrderPage url={WS_ORDERS_USER_URL} query={`token=${accessToken}`} />}
+                        {background ? <OrderHistoryPage /> : <OrderPage />}
                     </Route>
                 </Switch>
             </div>
         </div>
     );
 };
+
+const WithSocketProfilePageContent = withSocket(WS_ORDERS_USER_URL)(ProfilePageContent);
+
+const ProfilePage = () => (
+    <WithSocketProfilePageContent />
+);
 
 export default ProfilePage;

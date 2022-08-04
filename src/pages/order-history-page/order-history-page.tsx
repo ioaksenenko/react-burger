@@ -1,13 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import styles from './order-history-page.module.css';
 import { OrderFeed, TOrderFeedProps } from '../../components/order-feed/order-feed';
-import { withSocket, withIngredients } from '../../components/hocs';
+import { withIngredients } from '../../components/hocs';
 import { useParams } from 'react-router-dom';
 import { IReactRouterDomParams } from '../../services/types';
 import { useModal } from '../../hooks';
 import { OrderInfo } from '../../components/order-info/order-info';
-import { WS_ORDERS_USER_URL } from '../../utils/urls';
-import { getCookie } from '../../utils/cookie';
 import { useSelector } from '../../services/hooks';
 
 const OrderHistoryPageContent = () => {
@@ -25,12 +23,18 @@ const OrderHistoryPageContent = () => {
         <OrderInfo orderId={params.id} classes={orderInfoClasses} />, 
         <p className="text text_type_digits-default">#{order?.number}</p>
     );
+    const modalIsOpen = useSelector(store => store.modal.modalIsOpen);
 
-    const onSuccess = () => {
-        openModal();
-    };
+    useEffect(
+        () => {
+            if (!modalIsOpen && order) {
+                openModal();
+            }
+        },
+        [order, openModal, modalIsOpen]
+    )
 
-    const WithIngredientsOrderFeed = withIngredients<TOrderFeedProps>(onSuccess)(OrderFeed);
+    const WithIngredientsOrderFeed = withIngredients<TOrderFeedProps>()(OrderFeed);
 
     const orderFeedClasses = {
         root: styles.orderFeedRoot,
@@ -43,12 +47,8 @@ const OrderHistoryPageContent = () => {
     );
 };
 
-const accessToken = getCookie('accessToken');
-
-const WithSocketOrderHistoryPageContent = withSocket(WS_ORDERS_USER_URL, `token=${accessToken}`)(OrderHistoryPageContent);
-
-const OrderHistoryPage = () => (
-    <WithSocketOrderHistoryPageContent />
-);
+const OrderHistoryPage = React.memo(() => (
+    <OrderHistoryPageContent />
+));
 
 export default OrderHistoryPage;

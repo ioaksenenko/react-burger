@@ -1,4 +1,5 @@
 import {
+    WS_CONNECT,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
@@ -21,6 +22,12 @@ export const webSocketReducer = (
     action: TWebSocketActions
 ): IWebSocketState => {
     switch (action.type) {
+        case WS_CONNECT:
+            return {
+                wsConnected: false,
+                wsError: null,
+                wsMessage: null
+            };
         case WS_CONNECTION_SUCCESS:
             return {
                 ...state,

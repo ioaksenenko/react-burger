@@ -21,7 +21,7 @@ export const OrderInfo: FC<TOrderInfoProps> = ({orderId, classes}) => {
     const wsMessage = useSelector(store => store.ws.wsMessage);
 
     const order = useMemo(
-        () => wsMessage?.orders.find(order => order._id === orderId),
+        () => wsMessage?.orders ? wsMessage?.orders.find(order => order._id === orderId) : null,
         [wsMessage?.orders, orderId]
     );
 

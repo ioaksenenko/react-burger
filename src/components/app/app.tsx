@@ -10,11 +10,14 @@ import Layout from '../layout/layout';
 import ProtectedRoute from '../protected-route/protected-route';
 import { ILocationState } from '../../services/types';
 import { WS_ORDERS_ALL_URL } from '../../utils/urls';
+import { withSocket } from '../hocs';
 
 const App = () => {
   const location = useLocation<ILocationState>();
 
   const background = location.state?.background;
+
+  const WithSocketOrderPage = withSocket(WS_ORDERS_ALL_URL)(OrderPage);
 
   return (
     <Layout>
@@ -26,7 +29,7 @@ const App = () => {
           <FeedPage />
         </Route>
         <Route exact path="/feed/:id">
-          {background ? <FeedPage /> : <OrderPage url={WS_ORDERS_ALL_URL} />}
+          {background ? <FeedPage /> : <WithSocketOrderPage />}
         </Route>
         <ProtectedRoute auth path="/profile">
           <ProfilePage />
