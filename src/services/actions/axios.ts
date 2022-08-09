@@ -52,6 +52,24 @@ export const sendRequest = (url: string): ISendRequestAction => ({
     url
 });
 
+export const setData = <TResponseData = TResponseDataDefault>(
+    url: string, 
+    data: TResponseData
+): ISetDataAction<TResponseData> => ({
+    type: SET_DATA,
+    url,
+    data
+});
+
+export const setError = <TResponseError = TResponseErrorDefault>(
+    url: string, 
+    error: TResponseError
+): ISetErrorAction<TResponseError> => ({
+    type: SET_ERROR,
+    url,
+    error
+});
+
 export const request = <
     TRequestData, 
     TResponseData = TResponseDataDefault, 
@@ -60,32 +78,20 @@ export const request = <
     config: TAxiosConfig<TRequestData>, 
     successCallback: TSuccessCallback<TResponseData>, 
     errorCallback: TErrorCallback<TResponseError>
-) => (
+) => async (
     dispatch: Dispatch<ISetDataAction<TResponseData> | ISetErrorAction<TResponseError>>
-) => {
-    return axiosInstance(config).then(response => {
+): Promise<TAxiosActions<TResponseData, TResponseError>> => {
+    return axiosInstance.request(config).then(response => {
         if (response?.data?.success) {
-            dispatch({
-                type: SET_DATA, 
-                url: config.url,
-                data: response.data
-            });
             successCallback && successCallback(response.data);
+            return dispatch(setData(config.url, response.data as TResponseData));
         } else {
-            dispatch({
-                type: SET_ERROR,
-                url: config.url,
-                error: response?.data || response
-            });
             errorCallback && errorCallback(response?.data || response);
+            return dispatch(setError(config.url, (response?.data || response) as TResponseError));
         }
     }).catch(error => {
-        dispatch({
-            type: SET_ERROR,
-            url: config.url,
-            error: error?.response?.data || error
-        });
         errorCallback && errorCallback(error?.response?.data || error);
+        return dispatch(setError(config.url, (error?.response?.data || error) as TResponseError));
     });
 }
 

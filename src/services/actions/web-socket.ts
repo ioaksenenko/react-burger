@@ -28,7 +28,7 @@ export interface IWSConnectionErrorAction {
 
 export interface IWSConnectionClosedAction {
     readonly type: typeof WS_CONNECTION_CLOSED;
-    readonly event: Event
+    readonly event: CloseEvent
 };
 
 export interface IWSGetMessageAction {
@@ -70,7 +70,7 @@ export const wsConnectionError = (event: Event): IWSConnectionErrorAction => ({
     event
 });
 
-export const wsConnectionClosed = (event: Event): IWSConnectionClosedAction => ({
+export const wsConnectionClosed = (event: CloseEvent): IWSConnectionClosedAction => ({
     type: WS_CONNECTION_CLOSED,
     event
 });

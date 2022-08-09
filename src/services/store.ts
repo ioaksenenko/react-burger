@@ -21,7 +21,7 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const wsMiddleware = createWSMiddleware({
+export const wsMiddleware = createWSMiddleware({
   onConnect: wsConnect,
   onOpen: wsConnectionSuccess,
   onError: wsConnectionError,

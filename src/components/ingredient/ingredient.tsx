@@ -6,8 +6,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrag } from "react-dnd";
 import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from '../../services/actions/modal';
-import { setIngredientIsDrag } from '../../services/actions/constructor';
-import { setIngredient } from '../../services/actions/constructor';
+import { setIngredientIsDrag, setIngredient } from '../../services/actions';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TIngredient } from '../../services/types';
 

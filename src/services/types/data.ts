@@ -50,8 +50,7 @@ export type TIngredient = {
     readonly image: string;
     readonly image_mobile: string;
     readonly image_large: string;
-    readonly __v: string;
-    readonly uuid: string;
+    readonly __v: number;
     readonly [key: string]: string | number;
 };
 

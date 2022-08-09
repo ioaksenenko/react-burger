@@ -7,7 +7,7 @@ import { sendRequest } from '../../services/actions/axios';
 import { useLocation, useParams, useHistory } from 'react-router-dom';
 import { setModalTitle, setModalContent, openModal, setModalCloseCallback } from '../../services/actions/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { setIngredient } from '../../services/actions/constructor';
+import { setIngredient } from '../../services/actions';
 import { ILocationState, IReactRouterDomParams, TIngredientsResponse } from '../../services/types';
 
 const ConstructorPage = () => {
