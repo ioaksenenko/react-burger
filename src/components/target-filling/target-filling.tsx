@@ -52,7 +52,7 @@ const TargetFilling: FC<IDragFillingProps> = ({ ingredient }) => {
     };
 
     return (ingredient || (item && item.type !== 'bun')) ? (
-        <div ref={targetRef} data-uuid={ingredient && ingredient.uuid} className={classNames(
+        <div data-testid="target-filling" ref={targetRef} data-uuid={ingredient && ingredient.uuid} className={classNames(
             styles.ingredient, 
             !ingredient && styles.nonDragable, 
             canDrop && !isOver && styles.hilight,

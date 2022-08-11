@@ -49,7 +49,7 @@ const IngredientTabs = () => {
 
   return (
     <>
-      <div className={styles.tabList}>
+      <div className={styles.tabList} data-testid="tab-list">
         <IngredientTab value="buns" active={activeTab === 'buns'} onClick={scrollToActiveTab}>
           Булки
         </IngredientTab>

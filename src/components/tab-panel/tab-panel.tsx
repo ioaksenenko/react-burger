@@ -28,7 +28,7 @@ const TabPanel: FC<ITabPanelProps> = ({children, setActiveTab}) => {
   }
 
   return (
-    <div className={styles.root} onScroll={setClosestActiveTab}>
+    <div className={styles.root} onScroll={setClosestActiveTab} data-testid="tab-panel">
       {children}
     </div>
   )

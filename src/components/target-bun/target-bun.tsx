@@ -57,7 +57,7 @@ const TargetBun: FC<ITargetBunProps> = ({ type }) => {
     const name = `${bun?.name} (${type === 'top' ? 'верх' : 'низ'})`;
 
     return (bun || (item && item.type === 'bun')) ? (
-        <div ref={targetRef} className={classNames(
+        <div data-testid="target-bun" ref={targetRef} className={classNames(
             styles.ingredient, 
             styles.nonDragable, 
             bunState.canDrop && !bunState.isOver && styles.hilight, 

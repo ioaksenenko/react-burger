@@ -10,7 +10,7 @@ const IngredientDetails = () => {
     return ingredient && (
         <div className={styles.root}>
             <img className={styles.img} src={ingredient.image_large} alt={ingredient.name} />
-            <p className={classNames('text text_type_main-medium', styles.name)}>{ingredient.name}</p>
+            <p data-testid="ingredient-details-name" className={classNames('text text_type_main-medium', styles.name)}>{ingredient.name}</p>
             <div className={styles.propertyList}>
                 <IngredientProperty name='Калории, ккал' value={ingredient.calories} />
                 <IngredientProperty name='Белки, г' value={ingredient.proteins} />

@@ -8,7 +8,11 @@ interface IModalOverlayProps {
 };
 
 const ModalOverlay: FC<IModalOverlayProps> = ({show, handleClose}) => (
-    <div className={classNames(styles.root, show ? styles.show : styles.hide)} onClick={handleClose}></div>
+    <div 
+        data-testid="modal-overlay" 
+        className={classNames(styles.root, show ? styles.show : styles.hide)} 
+        onClick={handleClose}
+    ></div>
 );
 
 ModalOverlay.defaultProps = {
