@@ -102,22 +102,21 @@ describe('test axios async action creators', () => {
     });
 
     it('creates SET_ERROR when fetching data has been failed', async () => {
+        const error = {
+            success: false,
+            message: 'You should be authorised'
+        };
+
         jest.spyOn(axiosInstance, 'request').mockImplementationOnce(() => Promise.reject({
             response: {
-                data: {
-                    success: false,
-                    message: 'You should be authorised'
-                }
+                data: error
             }
         }));
 
         const expectedActions = [{
             type: SET_ERROR,
             url: INGREDIENTS_URL,
-            error: {
-                success: false,
-                message: 'You should be authorised'
-            }
+            error: error
         }]
 
         const store = mockStore({});

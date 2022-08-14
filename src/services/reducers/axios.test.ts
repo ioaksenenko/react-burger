@@ -65,26 +65,28 @@ describe('test axios resucer', () => {
 
     it('should handle SET_DATA when state is empty', () => {
         const state = undefined;
+
+        const data = [{
+            calories: 420,
+            carbohydrates: 53,
+            fat: 24,
+            image: "https://code.s3.yandex.net/react/code/bun-02.png",
+            image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+            image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+            name: "Краторная булка N-200i",
+            price: 1255,
+            proteins: 80,
+            type: "bun",
+            __v: 0,
+            _id: "60d3b41abdacab0026a733c6"
+        }];
         
         const action = {
             type: SET_DATA, 
             url: INGREDIENTS_URL,
             data: {
                 success: true,
-                data: [{
-                    calories: 420,
-                    carbohydrates: 53,
-                    fat: 24,
-                    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    name: "Краторная булка N-200i",
-                    price: 1255,
-                    proteins: 80,
-                    type: "bun",
-                    __v: 0,
-                    _id: "60d3b41abdacab0026a733c6"
-                }]
+                data: data
             }
         };
 
@@ -93,20 +95,7 @@ describe('test axios resucer', () => {
                 loading: false,
                 data: {
                     success: true,
-                    data: [{
-                        calories: 420,
-                        carbohydrates: 53,
-                        fat: 24,
-                        image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                        image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                        image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                        name: "Краторная булка N-200i",
-                        price: 1255,
-                        proteins: 80,
-                        type: "bun",
-                        __v: 0,
-                        _id: "60d3b41abdacab0026a733c6"
-                    }]
+                    data: data
                 },
                 error: null
             }
@@ -128,26 +117,28 @@ describe('test axios resucer', () => {
                 error: null
             }
         };
+
+        const data = [{
+            calories: 420,
+            carbohydrates: 53,
+            fat: 24,
+            image: "https://code.s3.yandex.net/react/code/bun-02.png",
+            image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+            image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+            name: "Краторная булка N-200i",
+            price: 1255,
+            proteins: 80,
+            type: "bun",
+            __v: 0,
+            _id: "60d3b41abdacab0026a733c6"
+        }];
         
         const action = {
             type: SET_DATA, 
             url: INGREDIENTS_URL,
             data: {
                 success: true,
-                data: [{
-                    calories: 420,
-                    carbohydrates: 53,
-                    fat: 24,
-                    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    name: "Краторная булка N-200i",
-                    price: 1255,
-                    proteins: 80,
-                    type: "bun",
-                    __v: 0,
-                    _id: "60d3b41abdacab0026a733c6"
-                }]
+                data: data
             }
         };
 
@@ -164,20 +155,7 @@ describe('test axios resucer', () => {
                 loading: false,
                 data: {
                     success: true,
-                    data: [{
-                        calories: 420,
-                        carbohydrates: 53,
-                        fat: 24,
-                        image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                        image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                        image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                        name: "Краторная булка N-200i",
-                        price: 1255,
-                        proteins: 80,
-                        type: "bun",
-                        __v: 0,
-                        _id: "60d3b41abdacab0026a733c6"
-                    }]
+                    data: data
                 },
                 error: null
             }
@@ -190,24 +168,23 @@ describe('test axios resucer', () => {
 
     it('should handle SET_ERROR when state is empty', () => {
         const state = undefined;
+
+        const error = {
+            success: false,
+            message: 'some error message'
+        };
         
         const action = {
             type: SET_ERROR, 
             url: INGREDIENTS_URL,
-            error: {
-                success: false,
-                message: 'some error message'
-            }
+            error: error
         };
 
         const expected = {
             [INGREDIENTS_URL]: {
                 loading: false,
                 data: null,
-                error: {
-                    success: false,
-                    message: 'some error message'
-                }
+                error: error
             }
         };
 
@@ -217,43 +194,30 @@ describe('test axios resucer', () => {
     });
 
     it('should handle SET_ERROR when state is not empty', () => {
+        const error = {
+            success: false,
+            message: 'some error message'
+        };
+
+        const errorStore = {
+            loading: false,
+            data: null,
+            error: error
+        };
+
         const state = {
-            '/some-url': {
-                loading: false,
-                data: null,
-                error: {
-                    success: false,
-                    message: 'some error message'
-                }
-            }
+            '/some-url': errorStore
         };
         
         const action = {
             type: SET_ERROR, 
             url: INGREDIENTS_URL,
-            error: {
-                success: false,
-                message: 'some error message'
-            }
+            error: error
         };
 
         const expected = {
-            '/some-url': {
-                loading: false,
-                data: null,
-                error: {
-                    success: false,
-                    message: 'some error message'
-                }
-            },
-            [INGREDIENTS_URL]: {
-                loading: false,
-                data: null,
-                error: {
-                    success: false,
-                    message: 'some error message'
-                }
-            }
+            '/some-url': errorStore,
+            [INGREDIENTS_URL]: errorStore
         };
 
         const received = axiosReducer(state, action);
@@ -305,15 +269,17 @@ describe('test axios resucer', () => {
     });
 
     it('should handle CLEAR_RESPONSE when state has other url', () => {
+        const errorStore = {
+            loading: false,
+            data: null,
+            error: {
+                success: false,
+                message: 'some error message'
+            }
+        }
+
         const state = {
-            '/some-url': {
-                loading: false,
-                data: null,
-                error: {
-                    success: false,
-                    message: 'some error message'
-                }
-            },
+            '/some-url': errorStore,
             [INGREDIENTS_URL]: {
                 loading: false,
                 data: {
@@ -343,14 +309,7 @@ describe('test axios resucer', () => {
         };
 
         const expected = {
-            '/some-url': {
-                loading: false,
-                data: null,
-                error: {
-                    success: false,
-                    message: 'some error message'
-                }
-            },
+            '/some-url': errorStore,
             [INGREDIENTS_URL]: {
                 loading: false,
                 data: null,

@@ -77,12 +77,7 @@ describe('test form resucer', () => {
         };
 
         const expected = {
-            '/login': {
-                data: {
-                    email: 'ioaksenenko@gmail.com',
-                    password: 'qwerty'
-                }
-            },
+            ...state,
             '/register': {
                 data: {
                     name: 'ivan aksenenko'
@@ -135,14 +130,10 @@ describe('test form resucer', () => {
         };
 
         const expected = {
+            ...state,
             '/login': {
                 data: {}
-            },
-            '/register': {
-                data: {
-                    name: 'ivan aksenenko'
-                }
-            },
+            }
         };
 
         const received = formReducer(state, action);

@@ -45,10 +45,8 @@ describe('test modal resucer', () => {
         };
 
         const expected = {
-            modalIsOpen: true,
-            modalTitle: 'some title',
-            modalContent: 'some content',
-            modalOnClose: modalCloseCallack
+            ...state,
+            modalIsOpen: true
         };
 
         const received = modalReducer(state, action);
@@ -92,10 +90,8 @@ describe('test modal resucer', () => {
         };
 
         const expected = {
-            modalIsOpen: false,
-            modalTitle: 'some title',
-            modalContent: 'some content',
-            modalOnClose: modalCloseCallack
+            ...state,
+            modalIsOpen: false
         };
 
         const received = modalReducer(state, action);
@@ -141,10 +137,8 @@ describe('test modal resucer', () => {
         };
 
         const expected = {
-            modalIsOpen: true,
-            modalTitle: 'some title',
-            modalContent: 'some content',
-            modalOnClose: modalCloseCallack
+            ...state,
+            modalTitle: 'some title'
         };
 
         const received = modalReducer(state, action);
@@ -190,10 +184,8 @@ describe('test modal resucer', () => {
         };
 
         const expected = {
-            modalIsOpen: true,
-            modalTitle: 'some title',
-            modalContent: 'some content',
-            modalOnClose: modalCloseCallack
+            ...state,
+            modalContent: 'some content'
         };
 
         const received = modalReducer(state, action);
@@ -243,9 +235,7 @@ describe('test modal resucer', () => {
         };
 
         const expected = {
-            modalIsOpen: true,
-            modalTitle: 'some title',
-            modalContent: 'some content',
+            ...state,
             modalOnClose: modalCloseCallack
         };
 
