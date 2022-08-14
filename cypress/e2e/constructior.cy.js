@@ -17,41 +17,41 @@ describe('test burger constructor', () => {
 
     it('should active buns tab by default', function() {
         cy.wait('@ingredients').then(() => {
-            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
+            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
         });
     });
 
     it('should active sauces tab if clicked on', function() {
         cy.wait('@ingredients').then(() => {
             cy.get('[data-testid="tab-list"]').contains('Соусы').click();
-            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
+            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
         });
     });
 
     it('should active toppings tab if clicked on', function() {
         cy.wait('@ingredients').then(() => {
             cy.get('[data-testid="tab-list"]').contains('Начинки').click();
-            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('have.class', 'tab_tab_type_current__Q2VnC');
+            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
         });
     });
 
     it('should active buns tab if clicked on', function() {
         cy.wait('@ingredients').then(() => {
             cy.get('[data-testid="tab-list"]').contains('Начинки').click();
-            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('have.class', 'tab_tab_type_current__Q2VnC');
+            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
             
             cy.get('[data-testid="tab-list"]').contains('Булки').click();
-            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
-            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('not.have.class', 'tab_tab_type_current__Q2VnC');
+            cy.get('[data-testid="tab-list"]').contains('Булки').parent().should('have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Соусы').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
+            cy.get('[data-testid="tab-list"]').contains('Начинки').parent().should('not.have.css', 'box-shadow', 'rgb(76, 76, 255) 0px -2px 0px 0px inset');
         });
     });
 

@@ -10,6 +10,21 @@ import {
 import { INGREDIENTS_URL } from '../../utils/urls';
 
 describe('test axios resucer', () => {
+    const data = [{
+        calories: 420,
+        carbohydrates: 53,
+        fat: 24,
+        image: "https://code.s3.yandex.net/react/code/bun-02.png",
+        image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+        image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+        name: "Краторная булка N-200i",
+        price: 1255,
+        proteins: 80,
+        type: "bun",
+        __v: 0,
+        _id: "60d3b41abdacab0026a733c6"
+    }];
+
     it('should handle SEND_REQUEST when state is empty', () => {
         const state = undefined;
 
@@ -65,21 +80,6 @@ describe('test axios resucer', () => {
 
     it('should handle SET_DATA when state is empty', () => {
         const state = undefined;
-
-        const data = [{
-            calories: 420,
-            carbohydrates: 53,
-            fat: 24,
-            image: "https://code.s3.yandex.net/react/code/bun-02.png",
-            image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-            image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-            name: "Краторная булка N-200i",
-            price: 1255,
-            proteins: 80,
-            type: "bun",
-            __v: 0,
-            _id: "60d3b41abdacab0026a733c6"
-        }];
         
         const action = {
             type: SET_DATA, 
@@ -117,21 +117,6 @@ describe('test axios resucer', () => {
                 error: null
             }
         };
-
-        const data = [{
-            calories: 420,
-            carbohydrates: 53,
-            fat: 24,
-            image: "https://code.s3.yandex.net/react/code/bun-02.png",
-            image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-            image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-            name: "Краторная булка N-200i",
-            price: 1255,
-            proteins: 80,
-            type: "bun",
-            __v: 0,
-            _id: "60d3b41abdacab0026a733c6"
-        }];
         
         const action = {
             type: SET_DATA, 
@@ -231,20 +216,7 @@ describe('test axios resucer', () => {
                 loading: false,
                 data: {
                     success: true,
-                    data: [{
-                        calories: 420,
-                        carbohydrates: 53,
-                        fat: 24,
-                        image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                        image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                        image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                        name: "Краторная булка N-200i",
-                        price: 1255,
-                        proteins: 80,
-                        type: "bun",
-                        __v: 0,
-                        _id: "60d3b41abdacab0026a733c6"
-                    }]
+                    data: data
                 },
                 error: null
             }
@@ -284,20 +256,7 @@ describe('test axios resucer', () => {
                 loading: false,
                 data: {
                     success: true,
-                    data: [{
-                        calories: 420,
-                        carbohydrates: 53,
-                        fat: 24,
-                        image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                        image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                        image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                        name: "Краторная булка N-200i",
-                        price: 1255,
-                        proteins: 80,
-                        type: "bun",
-                        __v: 0,
-                        _id: "60d3b41abdacab0026a733c6"
-                    }]
+                    data: data
                 },
                 error: null
             }
