@@ -39,16 +39,16 @@ const Modal = () => {
 
     return createPortal(
         <>
-        <div className={classNames(styles.modal, modalIsOpen ? styles.show : styles.hide)}>
-            <div className={styles.head}>
-                {typeof modalTitle === 'string' || !modalTitle
-                    ? <p className={classNames("text text_type_main-large", styles.title)}>{modalTitle}</p> 
-                    : modalTitle}
-                <span className={styles.closeIcon} onClick={handleClose}><CloseIcon type="primary" /></span>
+            <div className={classNames(styles.modal, modalIsOpen ? styles.show : styles.hide)} data-testid="modal">
+                <div className={styles.head}>
+                    {typeof modalTitle === 'string' || !modalTitle
+                        ? <p className={classNames("text text_type_main-large", styles.title)}>{modalTitle}</p> 
+                        : modalTitle}
+                    <span className={styles.closeIcon} onClick={handleClose} data-testid="close-modal"><CloseIcon type="primary" /></span>
+                </div>
+                <div className={styles.body}>{modalContent}</div>
             </div>
-            <div className={styles.body}>{modalContent}</div>
-        </div>
-        <ModalOverlay show={modalIsOpen} handleClose={handleClose} />
+            <ModalOverlay show={modalIsOpen} handleClose={handleClose} />
         </>,
         modalRoot
     );

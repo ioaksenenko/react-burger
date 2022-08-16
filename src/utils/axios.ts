@@ -51,6 +51,7 @@ export const refreshToken = async (token: string | null = null) => {
                 }
             }
         );
+        console.log(response);
         if (response.success) {
             setCookie(
                 'accessToken',

@@ -8,7 +8,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from '../../services/actions/modal';
 import { sendRequest } from "../../services/actions/axios";
 import { useAuth } from "../../hooks";
-import { clearCart } from "../../services/actions/constructor";
+import { clearCart } from "../../services/actions";
 import { 
     TUserData,
     TUserResponse,

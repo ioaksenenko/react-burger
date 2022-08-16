@@ -1,3 +1,7 @@
+## Link to project
+
+The project is available at the link [Stellar burgers](https://aksenenko.stellarburgers.nomoredomains.sbs).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

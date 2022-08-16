@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styles from './target-filling.module.css';
 import { useSelector, useDispatch } from '../../services/hooks';
-import { addIngredient, delIngredient } from '../../services/actions/constructor';
+import { addIngredient, delIngredient } from '../../services/actions';
 import { useDrop } from "react-dnd";
 import classNames from 'classnames';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -52,7 +52,7 @@ const TargetFilling: FC<IDragFillingProps> = ({ ingredient }) => {
     };
 
     return (ingredient || (item && item.type !== 'bun')) ? (
-        <div ref={targetRef} data-uuid={ingredient && ingredient.uuid} className={classNames(
+        <div data-testid="target-filling" ref={targetRef} data-uuid={ingredient && ingredient.uuid} className={classNames(
             styles.ingredient, 
             !ingredient && styles.nonDragable, 
             canDrop && !isOver && styles.hilight,

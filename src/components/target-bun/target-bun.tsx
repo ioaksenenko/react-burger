@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect, FC } from 'react';
 import styles from './target-bun.module.css';
 import { useSelector, useDispatch } from '../../services/hooks';
-import { addIngredient } from '../../services/actions/constructor';
+import { addIngredient } from '../../services/actions';
 import { useDrop } from "react-dnd";
 import classNames from 'classnames';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -57,7 +57,7 @@ const TargetBun: FC<ITargetBunProps> = ({ type }) => {
     const name = `${bun?.name} (${type === 'top' ? 'верх' : 'низ'})`;
 
     return (bun || (item && item.type === 'bun')) ? (
-        <div ref={targetRef} className={classNames(
+        <div data-testid="target-bun" ref={targetRef} className={classNames(
             styles.ingredient, 
             styles.nonDragable, 
             bunState.canDrop && !bunState.isOver && styles.hilight, 

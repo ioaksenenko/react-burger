@@ -16,3 +16,13 @@ export const rootReducer = combineReducers({
     route: protectedRouteReducer,
     ws: webSocketReducer
 });
+
+export {
+    constructorReducer,
+    targetBunReducer,
+    modalReducer,
+    formReducer,
+    axiosReducer,
+    protectedRouteReducer,
+    webSocketReducer
+};

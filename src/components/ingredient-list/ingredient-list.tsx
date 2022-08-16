@@ -10,7 +10,7 @@ interface IIngredientListProps {
 };
 
 const IngredientList : FC<IIngredientListProps> = ({id, title, ingredients}) => (
-  <section className={styles.root} id={id}>
+  <section className={styles.root} id={id} data-testid={id}>
     <p className="text text_type_main-medium">{title}</p>
     <div className={styles.list}>
       {ingredients.map(ingredient => (

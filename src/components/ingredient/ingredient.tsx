@@ -6,8 +6,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrag } from "react-dnd";
 import { openModal, setModalTitle, setModalContent, setModalCloseCallback } from '../../services/actions/modal';
-import { setIngredientIsDrag } from '../../services/actions/constructor';
-import { setIngredient } from '../../services/actions/constructor';
+import { setIngredientIsDrag, setIngredient } from '../../services/actions';
 import { useHistory, useLocation } from 'react-router-dom';
 import { TIngredient } from '../../services/types';
 
@@ -66,13 +65,13 @@ const Ingredient : FC<IIngredientProps> = ({ ingredient }) => {
 
     return (
         <>
-            <div ref={dragRef} className={classNames(styles.root, isDrag && styles.dragging)} onClick={handleIngredientClick}>
+            <div ref={dragRef} className={classNames(styles.root, isDrag && styles.dragging)} onClick={handleIngredientClick} data-testid="ingredient">
                 <img src={ingredient.image} alt={ingredient.name} />
                 <div className={styles.priceBox}>
                     <p className={classNames("text text_type_digits-default", styles.price)}>{ingredient.price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <p className={classNames("text text_type_main-default", styles.name)}>{ingredient.name}</p>
+                <p className={classNames("text text_type_main-default", styles.name)} data-testid="ingredient-name">{ingredient.name}</p>
                 {count !== 0 && <Counter count={count} size="default" />}
             </div>
         </>

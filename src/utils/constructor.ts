@@ -5,7 +5,7 @@ interface IAddByIndexOrChangePosition {(
     item: TIngredient, 
     index: number, 
     key: string, 
-    val: string | undefined
+    val: string | number | undefined
 ): ReadonlyArray<TIngredient>};
 
 export const addByIndexOrChangePosition: IAddByIndexOrChangePosition = (array, item, index, key, val) => {
@@ -20,7 +20,7 @@ export const addByIndexOrChangePosition: IAddByIndexOrChangePosition = (array, i
 interface IExclude {(
     array: ReadonlyArray<TIngredient>,
     key: string, 
-    val: string | undefined
+    val: string | number | undefined
 ): ReadonlyArray<TIngredient>};
 
 export const exclude: IExclude = (array, key, val) => {

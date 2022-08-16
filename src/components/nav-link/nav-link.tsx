@@ -22,7 +22,7 @@ const NavLink : FC<INavLinkProps> = ({to, icon, text, exact, classes, onClick}) 
     return (
         <Link to={to} className={classNames(styles.link, classes && classes.link)} onClick={onClick}>
             {icon && cloneElement(icon, {type: active ? "primary" : "secondary"})}
-            <p className={classNames(
+            <p data-testid="nav-link" className={classNames(
                 "text", 
                 classes && classes.text ? classes.text : " text_type_main-default",
                 active ? styles.active : "text_color_inactive"

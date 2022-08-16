@@ -34,6 +34,7 @@ export const withAxios = <
 
     const handleError = useCallback<TErrorCallback<TResponseError>>(
         (error) => {
+            console.log(error);
             if (!errorCallback) {
                 dispatch(setModalTitle('Ошибка'));
                 dispatch(setModalContent(

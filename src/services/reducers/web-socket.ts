@@ -48,6 +48,7 @@ export const webSocketReducer = (
         case WS_GET_MESSAGE:
             return {
                 ...state,
+                wsConnected: true,
                 wsError: null,
                 wsMessage: {...action.message}
             };
